@@ -5,6 +5,7 @@
  */
 package Classes;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -12,13 +13,48 @@ import java.util.Scanner;
  * @author AlphaLegends
  */
 public class ListaAdjacencia {
-
+     ArrayList<Vertice> lista;
+     private int vertice;
+    
     public ListaAdjacencia() {
     }
+
+    public ListaAdjacencia(int vertice) {
+        this.lista = null;
+        this.vertice = vertice;
+    }
+
+    public ArrayList<Vertice> getLista() {
+        return lista;
+    }
+
+    public int getVertice() {
+        return vertice;
+    }
+
+    public void setLista(ArrayList<Vertice> lista) {
+        this.lista = lista;
+    }
+
+    public void setVertice(int vertice) {
+        this.vertice = vertice;
+    }
    
-    
-    public void LerListaAdjacencia(Scanner sc){
+    public void AdicionarVertice(int vertice,int valor){
+        Vertice v = new Vertice(vertice, valor);
+        this.lista.add(v);
         
     };
+    
+    public Vertice BuscarVertice(int vertice){
+        for(int i=0;i<lista.size();i++ ){
+            if(lista.get(i).getVertice() == vertice) return lista.get(i);
+        }
+        return null;
+    }
+    
+    public void RemoverVertice(Vertice v){
+        this.lista.remove(v);
+    }
     
 }

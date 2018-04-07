@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import Classes.MatrizAdjacencia;
+import java.util.ArrayList;
 
 /**
  *
@@ -205,7 +206,9 @@ public class Main extends javax.swing.JFrame {
             }
         
             ListaAdjacencia LA = new ListaAdjacencia();
-            LA.LerListaAdjacencia(sc);
+            //arraylist
+            ArrayList<ListaAdjacencia> listaA;
+            
         
     }
     }//GEN-LAST:event_jMenuItem2ActionPerformed

@@ -41,8 +41,8 @@ public class MatrizAdjacencia {
     
     
     public void LerMatrizAdjacencia(Scanner sc){
-        int n = sc.nextInt();
-        this.tipo = n;
+        this.tipo = sc.nextInt();
+        int n;
         n = sc.nextInt();
         int[][] matriz = new int[n][n];
         for(int i=0;i<n;i++){
@@ -50,9 +50,8 @@ public class MatrizAdjacencia {
                 matriz[i][j] = Integer.MAX_VALUE;
             }
         }
-        if(this.tipo == 0){//é um grafo, maarcar ida e volta
-            for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
+        if(this.tipo == 0){//é um grafo, marcar ida e volta
+            while(sc.hasNext()){
                 int x,y;
                 x = sc.nextInt();
                 y = sc.nextInt();
@@ -60,21 +59,15 @@ public class MatrizAdjacencia {
                 matriz[x][y] = n;
                 matriz[y][x] = n;         
             }
-        }
  
-            
-            
         }else if(this.tipo == 1){//é um digrafo, possui orientação, marcar só ida
-                for(int i=0;i<n;i++){
-                    for(int j=0;j<n;j++){
-                        int x,y;
-                        x = sc.nextInt();
-                        y = sc.nextInt();
-                        n = sc.nextInt();
-                        matriz[x][y] = n;
-                    }
+                while(sc.hasNext()){
+                    int x,y;
+                    x = sc.nextInt();
+                    y = sc.nextInt();
+                    n = sc.nextInt();
+                    matriz[x][y] = n;
                 }        
-                
         }//end if
         this.matriz = matriz;
     }
@@ -82,7 +75,7 @@ public class MatrizAdjacencia {
     public void ExibirMatrizAdjacencia(int[][] matriz){
         for(int i=0;i<matriz.length;i++){
             for(int j=0;j<matriz.length;j++){
-                System.out.print(matriz[i][j]);
+                System.out.print(matriz[i][j]+" ");
             }
             System.out.println();
         }
