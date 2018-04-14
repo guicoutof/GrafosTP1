@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class Main extends javax.swing.JFrame {
     MatrizAdjacencia MA = new MatrizAdjacencia();
-    ListaAdjacencia LA = new ListaAdjacencia();
+    ArrayList<ListaAdjacencia> LA = new ArrayList<ListaAdjacencia>();
     /**
      * Creates new form Main
      */
@@ -47,12 +47,17 @@ public class Main extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,23 +103,41 @@ public class Main extends javax.swing.JFrame {
 
         jMenu2.setText("Funções");
 
-        jMenuItem3.setText("Busca em Profundidade");
-        jMenu2.add(jMenuItem3);
+        jMenu3.setText("Busca");
 
-        jMenuItem4.setText("Busca em Largura");
-        jMenu2.add(jMenuItem4);
+        jMenuItem9.setText("Busca em Largura");
+        jMenu3.add(jMenuItem9);
+
+        jMenuItem10.setText("Busca em Profundidade");
+        jMenu3.add(jMenuItem10);
+
+        jMenu2.add(jMenu3);
+
+        jMenu4.setText("Arvore Geradora Minima");
+
+        jMenuItem3.setText("Prim");
+        jMenu4.add(jMenuItem3);
+
+        jMenuItem4.setText("Kruskal");
+        jMenu4.add(jMenuItem4);
+
+        jMenu2.add(jMenu4);
+
+        jMenu5.setText("Caminho Minimo");
+
+        jMenuItem11.setText("Dijkstra");
+        jMenu5.add(jMenuItem11);
+
+        jMenuItem12.setText("Bellman-Ford");
+        jMenu5.add(jMenuItem12);
+
+        jMenu2.add(jMenu5);
 
         jMenuItem5.setText("Verificação de caminho");
         jMenu2.add(jMenuItem5);
 
         jMenuItem6.setText("Verificação de grafo conexo");
         jMenu2.add(jMenuItem6);
-
-        jMenuItem7.setText("Arvore geradora minima");
-        jMenu2.add(jMenuItem7);
-
-        jMenuItem8.setText("Caminho minimo");
-        jMenu2.add(jMenuItem8);
 
         jMenuBar1.add(jMenu2);
 
@@ -205,9 +228,28 @@ public class Main extends javax.swing.JFrame {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         
-            ListaAdjacencia LA = new ListaAdjacencia();
+       
             //arraylist
-            ArrayList<ListaAdjacencia> listaA;
+            LA = new ArrayList<ListaAdjacencia>(); 
+            int tipo = sc.nextInt();
+            int x;
+            int y;
+            int n;
+            sc.nextInt();
+            if(tipo == 0){//é um grafo, marcar ida e volta
+            while(sc.hasNext()){
+                x = sc.nextInt();
+                y = sc.nextInt();
+                n = sc.nextInt();
+                
+                
+            }
+ 
+        }else if(tipo == 1){//é um digrafo, possui orientação, marcar só ida
+                while(sc.hasNext()){
+                    
+                }        
+        }
             
         
     }
@@ -257,15 +299,20 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

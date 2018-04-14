@@ -17,10 +17,11 @@ public class ListaAdjacencia {
      private int vertice;
     
     public ListaAdjacencia() {
+    
     }
 
     public ListaAdjacencia(int vertice) {
-        this.lista = null;
+        this.lista = new ArrayList<Vertice>();
         this.vertice = vertice;
     }
 
@@ -50,6 +51,7 @@ public class ListaAdjacencia {
         for(int i=0;i<lista.size();i++ ){
             if(lista.get(i).getVertice() == vertice) return lista.get(i);
         }
+        
         return null;
     }
     
