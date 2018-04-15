@@ -81,6 +81,31 @@ public class MatrizAdjacencia {
         }
     }
     
+    public void BuscaProfundidade(int[][] matriz,int raiz){
+        int[] cor = new int[matriz.length];
+        int[] d = new int[matriz.length];
+        int[] f = new int[matriz.length];
+        for(int i=0;i<matriz.length;i++){
+            cor[i] = 0; //0 = branco
+        }
+        int tempo = 0;
+        for(int i=raiz;i<matriz.length;i++){
+            for(int j=0;j<matriz.length;j++){
+                if(matriz[i][j]!=0){
+                    if(cor[i]==0){
+                      cor[i] = 1;//1 = cinza
+                      tempo++;
+                      
+                    }
+                    
+                }
+            }
+        }
+       
+    }
+    
+
+    
     
     
     

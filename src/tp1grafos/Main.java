@@ -5,7 +5,9 @@
  */
 package tp1grafos;
 
-import Classes.ListaAdjacencia;
+import Classes.*;
+import IU.*;
+import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -13,8 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
-import Classes.MatrizAdjacencia;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,11 +25,13 @@ import java.util.ArrayList;
 public class Main extends javax.swing.JFrame {
     MatrizAdjacencia MA = new MatrizAdjacencia();
     ArrayList<ListaAdjacencia> LA = new ArrayList<ListaAdjacencia>();
+    int tipo;
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
+
     }
 
     /**
@@ -39,7 +43,6 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -60,17 +63,6 @@ public class Main extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 383, Short.MAX_VALUE)
-        );
 
         jLabel1.setText("Guilherme Couto Fernandes       RA 131250671");
 
@@ -109,6 +101,11 @@ public class Main extends javax.swing.JFrame {
         jMenu3.add(jMenuItem9);
 
         jMenuItem10.setText("Busca em Profundidade");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem10);
 
         jMenu2.add(jMenu3);
@@ -147,7 +144,6 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
@@ -157,8 +153,7 @@ public class Main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(389, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jButton1)))
@@ -195,11 +190,11 @@ public class Main extends javax.swing.JFrame {
        
             MA.LerMatrizAdjacencia(sc);
             MA.ExibirMatrizAdjacencia(MA.getMatriz());
+            tipo = 1;
         
     }
     
-    //apartir de agora a string diretorio possui o diretorio do arquivo
-    
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -241,16 +236,61 @@ public class Main extends javax.swing.JFrame {
                 x = sc.nextInt();
                 y = sc.nextInt();
                 n = sc.nextInt();
-                
+                int aux=0;
+                //ida
+                for(int i=0;i<LA.size();i++){
+                    if(LA.get(i).VerificaVertice(x)){
+                        LA.get(i).AdicionarVertice(y,n);
+                        aux = 1;
+                    }
+                }
+                if(aux == 0){
+                    ListaAdjacencia novo = new ListaAdjacencia(x);
+                    novo.AdicionarVertice(y,n);
+                    LA.add(novo);
+                }
+                //volta
+                aux = x;
+                x = y;
+                y = aux;
+                aux=0;
+                for(int i=0;i<LA.size();i++){
+                    if(LA.get(i).VerificaVertice(x)){
+                        LA.get(i).AdicionarVertice(y,n);
+                        aux = 1;
+                    }
+                }
+                if(aux == 0){
+                    ListaAdjacencia novo = new ListaAdjacencia(x);
+                    novo.AdicionarVertice(y,n);
+                    LA.add(novo);
+                }
                 
             }
  
         }else if(tipo == 1){//é um digrafo, possui orientação, marcar só ida
                 while(sc.hasNext()){
-                    
+                    x = sc.nextInt();
+                    y = sc.nextInt();
+                    n = sc.nextInt();
+                    int aux=0;
+                    //ida
+                    for(int i=0;i<LA.size();i++){
+                        if(LA.get(i).VerificaVertice(x)){
+                            LA.get(i).AdicionarVertice(y,n);
+                            aux = 1;
+                        }
+                    }
+                    if(aux == 0){
+                        ListaAdjacencia novo = new ListaAdjacencia(x);
+                        novo.AdicionarVertice(y,x);
+                        LA.add(novo);
+                    }
+
                 }        
         }
-            
+        
+        tipo = 2;
         
     }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -258,6 +298,18 @@ public class Main extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        if(tipo == 1){
+            IUBuscaProfundidade IU = new IUBuscaProfundidade(MA);
+            IU.setVisible(true);
+        }else if(tipo ==2){
+            IUBuscaProfundidade IU = new IUBuscaProfundidade(LA);
+            IU.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+        }
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,6 +365,5 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,19 +5,129 @@
  */
 package IU;
 
+import Classes.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author AlphaLegends
  */
 public class IUBuscaProfundidade extends javax.swing.JFrame {
 
+    private int tipo;
+    private MatrizAdjacencia MA;
+    ArrayList<ListaAdjacencia> LA;
+    DefaultTableModel model = new DefaultTableModel(); //pegar seu model aqui
+    JTable JTable1 = new JTable(model);
+//ou table.setModel(model);
     /**
      * Creates new form IUBuscaProfundidade
-     */
-    public IUBuscaProfundidade() {
+     **/
+    
+    public IUBuscaProfundidade(){
         initComponents();
-    }
 
+    }
+    
+    public IUBuscaProfundidade(MatrizAdjacencia MA) {
+        initComponents(); 
+        tipo = 1;
+        this.MA = MA;
+    }
+    
+    public IUBuscaProfundidade(ArrayList<ListaAdjacencia> LA) {
+        initComponents();
+        tipo = 2;
+        this.LA = LA;
+    }
+    
+    //Busca Matriz Adjacencia
+    
+    public void BuscaProfundidadeMatriz(MatrizAdjacencia MA){
+        int raiz = Integer.valueOf(Raiz.getText());
+        int[][] matriz = MA.getMatriz();
+        int[] cor = new int[matriz.length];
+        int[] d = new int[matriz.length];
+        int[] f = new int[matriz.length];
+        for(int i=0;i<matriz.length;i++){
+            cor[i] = 0; //0 = branco
+        }
+        int tempo = 0;
+        for(int i=raiz;i<matriz.length;i++){
+            for(int j=0;j<matriz.length;j++){
+                if(matriz[i][j]!=0){
+                    if(cor[i]==0){
+                      VisitaBuscaMatriz(i,cor,d,f,matriz,tempo);
+                    }
+                    
+                }
+            }
+        }
+        for(int i=0;i<d.length;i++){
+            model.addRow(new Object[]{Arrays.hashCode(matriz[i]), d[Arrays.hashCode(matriz[i])], f[Arrays.hashCode(matriz[i])]});
+        }
+        
+        
+        
+    }
+    
+    //Busca com Lista Adjacencia
+
+    public void BuscaProfundidadeLista(ArrayList<ListaAdjacencia> LA){
+        int raiz = Integer.valueOf(Raiz.getText());
+        int[] cor = new int[LA.size()];
+        int[] d = new int[LA.size()];
+        int[] f = new int[LA.size()];
+        for(int i=0;i<LA.size();i++){
+            cor[i] = 0; //0 = branco
+        }
+        int tempo=0;
+        for(int i=raiz;i<LA.size();i++){
+            if(cor[LA.get(i).getVertice()]==0){
+                VisitaBuscaLista(i,cor,d,f,LA,tempo);
+            }  
+        }
+        for(int i=0;i<d.length;i++){
+            model.addRow(new Object[]{ LA.get(i).getVertice(), d[LA.get(i).getVertice()], f[LA.get(i).getVertice()]});
+        }
+    }
+    
+    //Auxiliar para Matriz Adjacencia
+    
+    public void VisitaBuscaMatriz(int u,int[] cor,int[] d,int[] f,int[][] matriz,int tempo){
+        cor[u] = 1;//1 = cinza
+        tempo++;
+        d[u]=tempo;
+        for(int k=0;k<matriz.length;k++){
+            if(matriz[u][k]!=0){
+                VisitaBuscaMatriz(k,cor,d,f,matriz,tempo);
+            }
+        }
+        cor[u]=2;//2 = preto;
+        tempo++;
+        f[u]=tempo;
+    return;
+    }
+    
+    //Auxiliar para Lista Adjacencia
+    
+    public void VisitaBuscaLista(int u,int[] cor,int[] d,int[] f,ArrayList<ListaAdjacencia> LA,int tempo){
+        cor[u] = 1;//1 = cinza
+        tempo++;
+        d[u]=tempo;
+        for(int k=0;k<LA.get(u).getLista().size();k++){
+                VisitaBuscaLista(k,cor,d,f,LA,tempo);
+        }
+        cor[u]=2;//2 = preto;
+        tempo++;
+        f[u]=tempo;
+    return;
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,16 +149,18 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nó Inicial");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Vertice", "Tempo de Chegada", "Tempo de Finalização"
@@ -79,7 +191,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 384, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(1, 1, 1)
@@ -97,7 +209,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addGap(10, 10, 10)
                             .addComponent(Descoberta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE))
                     .addGap(1, 1, 1)))
         );
         layout.setVerticalGroup(
@@ -124,6 +236,14 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        if(tipo==1){
+            BuscaProfundidadeMatriz(MA);
+        }else if(tipo == 2){
+            BuscaProfundidadeLista(LA);
+        }
+    }//GEN-LAST:event_BuscarActionPerformed
 
     /**
      * @param args the command line arguments

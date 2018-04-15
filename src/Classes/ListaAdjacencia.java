@@ -59,4 +59,17 @@ public class ListaAdjacencia {
         this.lista.remove(v);
     }
     
+    public boolean VerificaVertice(int vertice){
+        if(this.vertice == vertice)return true;
+        return false;
+    }
+    
+    public String exibir(){
+        String msg = "\n vertice " + this.vertice+" ";
+        for(int i=0;i<lista.size();i++){
+            msg = msg + lista.get(i).exibir();
+        }
+        return msg;
+    }
+    
 }

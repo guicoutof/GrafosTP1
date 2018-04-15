@@ -37,5 +37,9 @@ public class Vertice extends ListaAdjacencia{
         this.vertice = vertice;
     }
     
+    public String exibir(){
+        String msg = "aresta " + vertice + " valor " + valor+" ";
+        return msg;
+    }
     
 }
