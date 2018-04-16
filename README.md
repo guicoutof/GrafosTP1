@@ -1,2 +1,2 @@
 # GrafosTP1
-Trabalho I disciplina de Grafos
+Trabalho Prático I da disciplina de Grafos.
