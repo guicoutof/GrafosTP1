@@ -18,7 +18,7 @@ public class ListaAdjacencia {
     
     public ListaAdjacencia() {
     this.lista = new ArrayList<Vertice>();
-    this.vertice = 0;
+    this.vertice = -1;
     }
 
     public ListaAdjacencia(int vertice) {
@@ -65,7 +65,7 @@ public class ListaAdjacencia {
     }
     
     public String exibir(){
-        String msg = "\n vertice " + this.vertice+" ";
+        String msg = "vertice " + this.vertice+" ";
         for(int i=0;i<lista.size();i++){
             msg = msg + lista.get(i).exibir();
         }

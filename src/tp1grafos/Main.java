@@ -25,10 +25,12 @@ import javax.swing.JOptionPane;
 public class Main extends javax.swing.JFrame {
     MatrizAdjacencia MA = new MatrizAdjacencia();
     ListaAdjacencia[] LA;
-    int tipo;
+    int tipoEstrutura;
     /**
      * Creates new form Main
      */
+   
+    
     public Main() {
         initComponents();
 
@@ -178,8 +180,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
             
-    int opcao = file.showOpenDialog(this);
-    
+    int opcao = file.showOpenDialog(this); 
     if(opcao == JFileChooser.APPROVE_OPTION){
         Scanner sc = null;
             try {
@@ -190,7 +191,7 @@ public class Main extends javax.swing.JFrame {
        
             MA.LerMatrizAdjacencia(sc);
             MA.ExibirMatrizAdjacencia(MA.getMatriz());
-            tipo = 1;
+            tipoEstrutura = 1;
         
     }
     
@@ -223,55 +224,9 @@ public class Main extends javax.swing.JFrame {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         
-            int tipo = sc.nextInt();
-            int vertices = sc.nextInt();
-            //arraylist
-            LA = new ListaAdjacencia[vertices]; 
-            
-            for(int i = 0; i < vertices; i++){
-            LA[i] = new ListaAdjacencia();
-            }
-            
-            int x;
-            int y;
-            int n;
-            
-            if(tipo == 0){//é um grafo, marcar ida e volta
-            while(sc.hasNext()){
-                int aux;
-                x = sc.nextInt();
-                y = sc.nextInt();
-                n = sc.nextInt();
-                
-                //ida
-                
-                LA[x].setVertice(x);
-                LA[x].AdicionarVertice(y,n);
-                
-                
-                //volta
-                aux = x;
-                x = y;
-                y = aux;
-                
-                LA[x].setVertice(x);
-                LA[x].AdicionarVertice(y,n);
-                
-            }
- 
-        }else if(tipo == 1){//é um digrafo, possui orientação, marcar só ida
-                while(sc.hasNext()){
-                    x = sc.nextInt();
-                    y = sc.nextInt();
-                    n = sc.nextInt();
-                    
-                    LA[x].setVertice(x);
-                    LA[x].AdicionarVertice(y,n);
-                }        
-        }
-        
-        this.tipo = 2;
-        
+            LerListaAdjacencia(sc);//le a Lista Adjacencia
+            ExibirListaAdjacencia();
+            tipoEstrutura = 2;
     }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -280,10 +235,10 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        if(tipo == 1){
+        if(tipoEstrutura == 1){
             IUBuscaProfundidade IU = new IUBuscaProfundidade(MA);
             IU.setVisible(true);
-        }else if(tipo ==2){
+        }else if(tipoEstrutura ==2){
             IUBuscaProfundidade IU = new IUBuscaProfundidade(LA);
             IU.setVisible(true);
         }else{
@@ -346,4 +301,57 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
+
+     public void LerListaAdjacencia(Scanner sc){
+        
+        int tipoGrafo = sc.nextInt();
+        int nVertices = sc.nextInt();
+        
+        //arraylist
+        LA = new ListaAdjacencia[nVertices]; 
+
+        for(int i = 0; i < nVertices; i++){
+        LA[i] = new ListaAdjacencia();
+        }
+
+        int vertice1;
+        int vertice2;
+        int peso;
+
+        if(tipoGrafo == 0){//é um grafo, marcar ida e volta
+            while(sc.hasNext()){
+                int aux;
+                //ida
+                vertice1 = sc.nextInt();
+                vertice2 = sc.nextInt();
+                peso = sc.nextInt();
+                
+                LA[vertice1].setVertice(vertice1);
+                LA[vertice1].AdicionarVertice(vertice2,peso);
+
+                //volta
+                aux = vertice1;
+                vertice1 = vertice2;
+                vertice2 = aux;
+
+                LA[vertice1].setVertice(vertice1);
+                LA[vertice1].AdicionarVertice(vertice2,peso);
+            }
+        }else if(tipoGrafo == 1){//é um digrafo, possui orientação, marcar só ida
+                while(sc.hasNext()){
+                    vertice1 = sc.nextInt();
+                    vertice2 = sc.nextInt();
+                    peso = sc.nextInt();
+                    
+                    LA[vertice1].setVertice(vertice1);
+                    LA[vertice1].AdicionarVertice(vertice2,peso);
+                }        
+        }       
+    }
+    
+    private void ExibirListaAdjacencia() {
+       for(int i=0;i<LA.length;i++){
+           System.out.print(LA[i].exibir());
+       }
+    }
 }

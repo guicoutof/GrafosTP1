@@ -5,20 +5,54 @@
  */
 package IU;
 
+import Classes.*;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author AlphaLegends
  */
 public class IUBuscaLargura extends javax.swing.JFrame {
 
-    /**
-     * Creates new form IUBuscaLargura
-     */
+    private int tipo;
+    private MatrizAdjacencia MA;
+    ListaAdjacencia[] LA;
+    DefaultTableModel model = new DefaultTableModel(); //pegar seu model aqui
+    JTable JTable1 = new JTable(model);
+    
+    
     public IUBuscaLargura() {
         initComponents();
         Descoberta.setName("");
+        tipo = 1;
+    }
+    
+    public IUBuscaLargura(MatrizAdjacencia MA) {
+        initComponents();
+        Descoberta.setName("");
+        this.MA = MA;
         
     }
+    
+    public IUBuscaLargura(ListaAdjacencia[] LA) {
+        initComponents();
+        Descoberta.setName("");
+        this.LA = LA;
+        tipo = 2;
+        
+    }
+    
+    public void BuscaLarguraMatriz(){
+        
+    }
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

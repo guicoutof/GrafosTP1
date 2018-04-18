@@ -13,22 +13,22 @@ import java.util.Scanner;
  */
 public class MatrizAdjacencia {
     private int[][] matriz;
-    private int tipo; //verifica se é grafo ou digrafo
+    private int tipoGrafo; //verifica se é grafo ou digrafo
 
     public MatrizAdjacencia() {
     }
 
     public MatrizAdjacencia(int[][] Matriz, int tipo) {
         this.matriz = Matriz;
-        this.tipo = tipo;
+        this.tipoGrafo = tipo;
     }
 
     public int getTipo() {
-        return tipo;
+        return tipoGrafo;
     }
 
     public void setTipo(int tipo) {
-        this.tipo = tipo;
+        this.tipoGrafo = tipo;
     }
 
     public int[][] getMatriz() {
@@ -41,72 +41,51 @@ public class MatrizAdjacencia {
     
     
     public void LerMatrizAdjacencia(Scanner sc){
-        this.tipo = sc.nextInt();
-        int n;
-        n = sc.nextInt();
-        int[][] matriz = new int[n][n];
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
+        this.tipoGrafo = sc.nextInt();
+        int nVertices;
+        nVertices = sc.nextInt();
+        int[][] matriz = new int[nVertices][nVertices];
+        for(int i=0;i<nVertices;i++){
+            for(int j=0;j<nVertices;j++){
                 matriz[i][j] = Integer.MAX_VALUE;
             }
         }
-        if(this.tipo == 0){//é um grafo, marcar ida e volta
+        if(this.tipoGrafo == 0){//é um grafo, marcar ida e volta
             while(sc.hasNext()){
-                int x,y;
-                x = sc.nextInt();
-                y = sc.nextInt();
-                n = sc.nextInt();
-                matriz[x][y] = n;
-                matriz[y][x] = n;         
+                int vertice1,vertice2,peso;
+                vertice1 = sc.nextInt();
+                vertice2 = sc.nextInt();
+                peso = sc.nextInt();
+                matriz[vertice1][vertice2] = peso;
+                matriz[vertice2][vertice1] = peso;         
             }
  
-        }else if(this.tipo == 1){//é um digrafo, possui orientação, marcar só ida
+        }else if(this.tipoGrafo == 1){//é um digrafo, possui orientação, marcar só ida
                 while(sc.hasNext()){
-                    int x,y;
-                    x = sc.nextInt();
-                    y = sc.nextInt();
-                    n = sc.nextInt();
-                    matriz[x][y] = n;
+                    int vertice1,vertice2,peso;
+                    vertice1 = sc.nextInt();
+                    vertice2 = sc.nextInt();
+                    peso = sc.nextInt();
+                    matriz[vertice1][vertice2] = peso;
                 }        
         }//end if
         this.matriz = matriz;
     }
     
     public void ExibirMatrizAdjacencia(int[][] matriz){
+        System.out.print("    ");
         for(int i=0;i<matriz.length;i++){
+            System.out.print(i+"     ");
+        }
+        System.out.println();
+        for(int i=0;i<matriz.length;i++){
+            System.out.print(i+" ");
             for(int j=0;j<matriz.length;j++){
                 System.out.print(matriz[i][j]+" ");
             }
             System.out.println();
         }
     }
-    
-    public void BuscaProfundidade(int[][] matriz,int raiz){
-        int[] cor = new int[matriz.length];
-        int[] d = new int[matriz.length];
-        int[] f = new int[matriz.length];
-        for(int i=0;i<matriz.length;i++){
-            cor[i] = 0; //0 = branco
-        }
-        int tempo = 0;
-        for(int i=raiz;i<matriz.length;i++){
-            for(int j=0;j<matriz.length;j++){
-                if(matriz[i][j]!=0){
-                    if(cor[i]==0){
-                      cor[i] = 1;//1 = cinza
-                      tempo++;
-                      
-                    }
-                    
-                }
-            }
-        }
-       
-    }
-    
-
-    
-    
     
     
 }

@@ -38,7 +38,7 @@ public class Vertice extends ListaAdjacencia{
     }
     
     public String exibir(){
-        String msg = "aresta " + vertice + " valor " + valor+" ";
+        String msg = "-> " + vertice + " peso " + valor+" \n";
         return msg;
     }
     
