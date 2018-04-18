@@ -19,7 +19,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
 
     private int tipo;
     private MatrizAdjacencia MA;
-    ArrayList<ListaAdjacencia> LA;
+    ListaAdjacencia[] LA;
     DefaultTableModel model = new DefaultTableModel(); //pegar seu model aqui
     JTable JTable1 = new JTable(model);
 //ou table.setModel(model);
@@ -38,7 +38,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
         this.MA = MA;
     }
     
-    public IUBuscaProfundidade(ArrayList<ListaAdjacencia> LA) {
+    public IUBuscaProfundidade(ListaAdjacencia[] LA) {
         initComponents();
         tipo = 2;
         this.LA = LA;
@@ -58,7 +58,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
         int tempo = 0;
         for(int i=raiz;i<matriz.length;i++){
             for(int j=0;j<matriz.length;j++){
-                if(matriz[i][j]!=0){
+                if(matriz[i][j]!=Integer.MAX_VALUE){
                     if(cor[i]==0){
                       VisitaBuscaMatriz(i,cor,d,f,matriz,tempo);
                     }
@@ -76,22 +76,22 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
     
     //Busca com Lista Adjacencia
 
-    public void BuscaProfundidadeLista(ArrayList<ListaAdjacencia> LA){
+    public void BuscaProfundidadeLista(ListaAdjacencia[] LA){
         int raiz = Integer.valueOf(Raiz.getText());
-        int[] cor = new int[LA.size()];
-        int[] d = new int[LA.size()];
-        int[] f = new int[LA.size()];
-        for(int i=0;i<LA.size();i++){
+        int[] cor = new int[LA.length];
+        int[] d = new int[LA.length];
+        int[] f = new int[LA.length];
+        for(int i=0;i<LA.length;i++){
             cor[i] = 0; //0 = branco
         }
         int tempo=0;
-        for(int i=raiz;i<LA.size();i++){
-            if(cor[LA.get(i).getVertice()]==0){
+        for(int i=raiz;i<LA.length;i++){
+            if(cor[LA[i].getVertice()]==0){
                 VisitaBuscaLista(i,cor,d,f,LA,tempo);
             }  
         }
         for(int i=0;i<d.length;i++){
-            model.addRow(new Object[]{ LA.get(i).getVertice(), d[LA.get(i).getVertice()], f[LA.get(i).getVertice()]});
+            model.addRow(new Object[]{ LA[i].getVertice(), d[LA[i].getVertice()], f[LA[i].getVertice()]});
         }
     }
     
@@ -102,7 +102,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
         tempo++;
         d[u]=tempo;
         for(int k=0;k<matriz.length;k++){
-            if(matriz[u][k]!=0){
+            if(matriz[u][k]!=Integer.MAX_VALUE){
                 VisitaBuscaMatriz(k,cor,d,f,matriz,tempo);
             }
         }
@@ -114,11 +114,11 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
     
     //Auxiliar para Lista Adjacencia
     
-    public void VisitaBuscaLista(int u,int[] cor,int[] d,int[] f,ArrayList<ListaAdjacencia> LA,int tempo){
+    public void VisitaBuscaLista(int u,int[] cor,int[] d,int[] f,ListaAdjacencia[] LA,int tempo){
         cor[u] = 1;//1 = cinza
         tempo++;
         d[u]=tempo;
-        for(int k=0;k<LA.get(u).getLista().size();k++){
+        for(int k=0;k<LA[u].getLista().size();k++){
                 VisitaBuscaLista(k,cor,d,f,LA,tempo);
         }
         cor[u]=2;//2 = preto;

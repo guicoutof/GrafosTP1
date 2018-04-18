@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class Main extends javax.swing.JFrame {
     MatrizAdjacencia MA = new MatrizAdjacencia();
-    ArrayList<ListaAdjacencia> LA = new ArrayList<ListaAdjacencia>();
+    ListaAdjacencia[] LA;
     int tipo;
     /**
      * Creates new form Main
@@ -223,48 +223,39 @@ public class Main extends javax.swing.JFrame {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         
-       
-            //arraylist
-            LA = new ArrayList<ListaAdjacencia>(); 
             int tipo = sc.nextInt();
+            int vertices = sc.nextInt();
+            //arraylist
+            LA = new ListaAdjacencia[vertices]; 
+            
+            for(int i = 0; i < vertices; i++){
+            LA[i] = new ListaAdjacencia();
+            }
+            
             int x;
             int y;
             int n;
-            sc.nextInt();
+            
             if(tipo == 0){//é um grafo, marcar ida e volta
             while(sc.hasNext()){
+                int aux;
                 x = sc.nextInt();
                 y = sc.nextInt();
                 n = sc.nextInt();
-                int aux=0;
+                
                 //ida
-                for(int i=0;i<LA.size();i++){
-                    if(LA.get(i).VerificaVertice(x)){
-                        LA.get(i).AdicionarVertice(y,n);
-                        aux = 1;
-                    }
-                }
-                if(aux == 0){
-                    ListaAdjacencia novo = new ListaAdjacencia(x);
-                    novo.AdicionarVertice(y,n);
-                    LA.add(novo);
-                }
+                
+                LA[x].setVertice(x);
+                LA[x].AdicionarVertice(y,n);
+                
+                
                 //volta
                 aux = x;
                 x = y;
                 y = aux;
-                aux=0;
-                for(int i=0;i<LA.size();i++){
-                    if(LA.get(i).VerificaVertice(x)){
-                        LA.get(i).AdicionarVertice(y,n);
-                        aux = 1;
-                    }
-                }
-                if(aux == 0){
-                    ListaAdjacencia novo = new ListaAdjacencia(x);
-                    novo.AdicionarVertice(y,n);
-                    LA.add(novo);
-                }
+                
+                LA[x].setVertice(x);
+                LA[x].AdicionarVertice(y,n);
                 
             }
  
@@ -273,24 +264,13 @@ public class Main extends javax.swing.JFrame {
                     x = sc.nextInt();
                     y = sc.nextInt();
                     n = sc.nextInt();
-                    int aux=0;
-                    //ida
-                    for(int i=0;i<LA.size();i++){
-                        if(LA.get(i).VerificaVertice(x)){
-                            LA.get(i).AdicionarVertice(y,n);
-                            aux = 1;
-                        }
-                    }
-                    if(aux == 0){
-                        ListaAdjacencia novo = new ListaAdjacencia(x);
-                        novo.AdicionarVertice(y,x);
-                        LA.add(novo);
-                    }
-
+                    
+                    LA[x].setVertice(x);
+                    LA[x].AdicionarVertice(y,n);
                 }        
         }
         
-        tipo = 2;
+        this.tipo = 2;
         
     }
     }//GEN-LAST:event_jMenuItem2ActionPerformed

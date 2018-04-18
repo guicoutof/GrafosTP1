@@ -17,7 +17,8 @@ public class ListaAdjacencia {
      private int vertice;
     
     public ListaAdjacencia() {
-    
+    this.lista = new ArrayList<Vertice>();
+    this.vertice = 0;
     }
 
     public ListaAdjacencia(int vertice) {
@@ -43,9 +44,8 @@ public class ListaAdjacencia {
    
     public void AdicionarVertice(int vertice,int valor){
         Vertice v = new Vertice(vertice, valor);
-        this.lista.add(v);
-        
-    };
+        this.lista.add(v);  
+    }
     
     public Vertice BuscarVertice(int vertice){
         for(int i=0;i<lista.size();i++ ){
