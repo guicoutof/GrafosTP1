@@ -15,6 +15,11 @@ public class Vertice extends ListaAdjacencia{
 
     public Vertice() {
     }
+    
+    public Vertice(int vertice){
+        this.vertice = vertice;
+        this.valor = 0;
+    }
 
     public Vertice(int vertice, int valor) {
         this.vertice = vertice;

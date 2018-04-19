@@ -100,6 +100,11 @@ public class Main extends javax.swing.JFrame {
         jMenu3.setText("Busca");
 
         jMenuItem9.setText("Busca em Largura");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuItem10.setText("Busca em Profundidade");
@@ -246,6 +251,18 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        if(tipoEstrutura == 1){
+            IUBuscaLargura IU = new IUBuscaLargura(MA);
+            IU.setVisible(true);
+        }else if(tipoEstrutura ==2){
+            IUBuscaLargura IU = new IUBuscaLargura(LA);
+            IU.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -304,7 +321,7 @@ public class Main extends javax.swing.JFrame {
 
      public void LerListaAdjacencia(Scanner sc){
         
-        int tipoGrafo = sc.nextInt();
+        int tipoAresta = sc.nextInt();
         int nVertices = sc.nextInt();
         
         //arraylist
@@ -318,7 +335,7 @@ public class Main extends javax.swing.JFrame {
         int vertice2;
         int peso;
 
-        if(tipoGrafo == 0){//é um grafo, marcar ida e volta
+        if(tipoAresta == 0){//é um grafo, marcar ida e volta
             while(sc.hasNext()){
                 int aux;
                 //ida
@@ -337,7 +354,7 @@ public class Main extends javax.swing.JFrame {
                 LA[vertice1].setVertice(vertice1);
                 LA[vertice1].AdicionarVertice(vertice2,peso);
             }
-        }else if(tipoGrafo == 1){//é um digrafo, possui orientação, marcar só ida
+        }else if(tipoAresta == 1){//é um digrafo, possui orientação, marcar só ida
                 while(sc.hasNext()){
                     vertice1 = sc.nextInt();
                     vertice2 = sc.nextInt();

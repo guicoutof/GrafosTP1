@@ -13,22 +13,22 @@ import java.util.Scanner;
  */
 public class MatrizAdjacencia {
     private int[][] matriz;
-    private int tipoGrafo; //verifica se é grafo ou digrafo
+    private int tipoAresta; //verifica se é grafo ou digrafo
 
     public MatrizAdjacencia() {
     }
 
     public MatrizAdjacencia(int[][] Matriz, int tipo) {
         this.matriz = Matriz;
-        this.tipoGrafo = tipo;
+        this.tipoAresta = tipo;
     }
 
     public int getTipo() {
-        return tipoGrafo;
+        return tipoAresta;
     }
 
     public void setTipo(int tipo) {
-        this.tipoGrafo = tipo;
+        this.tipoAresta = tipo;
     }
 
     public int[][] getMatriz() {
@@ -41,7 +41,7 @@ public class MatrizAdjacencia {
     
     
     public void LerMatrizAdjacencia(Scanner sc){
-        this.tipoGrafo = sc.nextInt();
+        this.tipoAresta = sc.nextInt();
         int nVertices;
         nVertices = sc.nextInt();
         int[][] matriz = new int[nVertices][nVertices];
@@ -50,7 +50,7 @@ public class MatrizAdjacencia {
                 matriz[i][j] = Integer.MAX_VALUE;
             }
         }
-        if(this.tipoGrafo == 0){//é um grafo, marcar ida e volta
+        if(this.tipoAresta == 0){//é um grafo, marcar ida e volta
             while(sc.hasNext()){
                 int vertice1,vertice2,peso;
                 vertice1 = sc.nextInt();
@@ -60,7 +60,7 @@ public class MatrizAdjacencia {
                 matriz[vertice2][vertice1] = peso;         
             }
  
-        }else if(this.tipoGrafo == 1){//é um digrafo, possui orientação, marcar só ida
+        }else if(this.tipoAresta == 1){//é um digrafo, possui orientação, marcar só ida
                 while(sc.hasNext()){
                     int vertice1,vertice2,peso;
                     vertice1 = sc.nextInt();
