@@ -21,8 +21,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
     ListaAdjacencia[] LA;
     
     
-    DefaultTableModel model = new DefaultTableModel(); //pegar seu model aqui
-    JTable JTable1 = new JTable(model);
+    
 //ou table.setModel(model);
     /**
      * Creates new form IUBuscaProfundidade
@@ -78,7 +77,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+
             },
             new String [] {
                 "Vertice", "Tempo de Chegada", "Tempo de Finalização"
@@ -185,11 +184,14 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
                 }
             }
         }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         for(int i=0;i<d.length;i++){
             System.out.println("vertice " +i+": "+d[i]+"/"+f[i]);
-            //model.addRow(new Object[]{i, d[i], f[i]});
-            
-            //JTable1.setModel(model);
+            Object[] linha = new Object[3];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = f[i];
+            model.addRow(linha);
         }
     }
     
@@ -227,11 +229,14 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
                 tempo = VisitaBuscaLista(i,cor,d,f,LA,tempo);
             }  
         }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         for(int i=0;i<d.length;i++){
             System.out.println("vertice " +i+": "+d[i]+"/"+f[i]);
-            //model.addRow(new Object[]{i, d[i], f[i]});
-            
-            //JTable1.setModel(model);
+            Object[] linha = new Object[3];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = f[i];
+            model.addRow(linha);
         }
     }
     
