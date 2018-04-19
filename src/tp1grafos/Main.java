@@ -26,6 +26,7 @@ public class Main extends javax.swing.JFrame {
     MatrizAdjacencia MA = new MatrizAdjacencia();
     ListaAdjacencia[] LA;
     int tipoEstrutura;
+    int tipoAresta;
     /**
      * Creates new form Main
      */
@@ -120,9 +121,19 @@ public class Main extends javax.swing.JFrame {
         jMenu4.setText("Arvore Geradora Minima");
 
         jMenuItem3.setText("Prim");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem3);
 
         jMenuItem4.setText("Kruskal");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem4);
 
         jMenu2.add(jMenu4);
@@ -138,6 +149,11 @@ public class Main extends javax.swing.JFrame {
         jMenu2.add(jMenu5);
 
         jMenuItem5.setText("Verificação de caminho");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         jMenuItem6.setText("Verificação de grafo conexo");
@@ -196,6 +212,7 @@ public class Main extends javax.swing.JFrame {
        
             MA.LerMatrizAdjacencia(sc);
             MA.ExibirMatrizAdjacencia(MA.getMatriz());
+            tipoAresta = MA.getTipoAresta();
             tipoEstrutura = 1;
         
     }
@@ -263,6 +280,46 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        if(tipoAresta == 0){
+            if(tipoEstrutura == 1){
+                IUKruskal IU = new IUKruskal(MA);
+                IU.setVisible(true);
+            }else if(tipoEstrutura ==2){
+                IUKruskal IU = new IUKruskal(LA);
+                IU.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+            }
+        }else JOptionPane.showMessageDialog(null,"Não é possivel gerar arvore minima para digrafo");
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        if(tipoAresta == 0){
+            if(tipoEstrutura == 1){
+                IUPrim IU = new IUPrim(MA);
+                IU.setVisible(true);
+            }else if(tipoEstrutura ==2){
+                IUPrim IU = new IUPrim(LA);
+                IU.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+            }
+        }else JOptionPane.showMessageDialog(null,"Não é possivel gerar arvore minima para digrafo");
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        if(tipoEstrutura == 1){
+            IUVerificaCaminho IU = new IUVerificaCaminho(MA);
+            IU.setVisible(true);
+        }else if(tipoEstrutura ==2){
+            IUVerificaCaminho IU = new IUVerificaCaminho(LA);
+            IU.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -321,7 +378,7 @@ public class Main extends javax.swing.JFrame {
 
      public void LerListaAdjacencia(Scanner sc){
         
-        int tipoAresta = sc.nextInt();
+        tipoAresta = sc.nextInt();
         int nVertices = sc.nextInt();
         
         //arraylist

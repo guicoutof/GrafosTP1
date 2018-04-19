@@ -5,17 +5,36 @@
  */
 package IU;
 
+import Classes.*;
+
 /**
  *
  * @author AlphaLegends
  */
 public class IUPrim extends javax.swing.JFrame {
 
+    private int tipoEstrutura;
+    private MatrizAdjacencia MA;
+    ListaAdjacencia[] LA;
     /**
-     * Creates new form IUPrim
+     * Creates new form IUKruskal
      */
     public IUPrim() {
         initComponents();
+    }
+    
+    public IUPrim(MatrizAdjacencia MA) {
+        initComponents();
+        this.MA = MA;
+        tipoEstrutura = 1;
+        
+    }
+    
+    public IUPrim(ListaAdjacencia[] LA) {
+        initComponents();
+        this.LA = LA;
+        tipoEstrutura = 2;
+        
     }
 
     /**
@@ -27,7 +46,7 @@ public class IUPrim extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

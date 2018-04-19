@@ -23,11 +23,11 @@ public class MatrizAdjacencia {
         this.tipoAresta = tipo;
     }
 
-    public int getTipo() {
+    public int getTipoAresta() {
         return tipoAresta;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipoAresta(int tipo) {
         this.tipoAresta = tipo;
     }
 
