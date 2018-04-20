@@ -44,7 +44,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         
     }
     
-    public void addFila(int vert){
+    public void enfileira(int vert){
         fila.add(vert);
     }
     
@@ -191,7 +191,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         cor[raiz] = 1;//cinza
         d[raiz] = 0;
         pai[raiz] = -1;
-        addFila(raiz);
+        enfileira(raiz);
         while(!fila.isEmpty()){
             int u = desenfileira();
             for(int j=0;j<matriz.length;j++){
@@ -200,20 +200,16 @@ public class IUBuscaLargura extends javax.swing.JFrame {
                         cor[j]=1;//cinza
                         d[j] = d[u]+1;
                         pai[j] = u;
-                        addFila(j);
+                        enfileira(j);
                     }
                 }
             }
             cor[u] = 2;//preto   
         }
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         for(int i=0;i<d.length;i++){
-            System.out.println("vertice " +i+": "+d[i]+"/"+pai[i]);
-            Object[] linha = new Object[3];
-            linha[0] = i;
-            linha[1] = d[i];
-            linha[2] = pai[i];
-            model.addRow(linha);
+            System.out.println("vertice " +i+": d "+d[i]+" pai "+pai[i]);
+            //model.addRow(new Object[]{i, d[i], f[i]});
+            //JTable1.setModel(model);
         }
     }
     
@@ -231,7 +227,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         cor[raiz] = 1;//cinza
         d[raiz] = 0;
         pai[raiz] = -1;
-        addFila(raiz);
+        enfileira(raiz);
         while(!fila.isEmpty()){
             int u = desenfileira();
             ArrayList<Vertice> lista = LA[u].getLista();
@@ -241,27 +237,16 @@ public class IUBuscaLargura extends javax.swing.JFrame {
                     cor[j]=1;//cinza
                     d[j] = d[u]+1;
                     pai[j] = u;
-                    addFila(j);
+                    enfileira(j);
                 }    
             }
             cor[u] = 2;//preto   
         }
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         for(int i=0;i<d.length;i++){
-            System.out.println("vertice " +i+": "+d[i]+"/"+pai[i]);
-            Object[] linha = new Object[3];
-            linha[0] = i;
-            linha[1] = d[i];
-            linha[2] = pai[i];
-            model.addRow(linha);
+            System.out.println("vertice " +i+": d "+d[i]+" pai "+pai[i]);
+            //model.addRow(new Object[]{i, d[i], f[i]});
+            //JTable1.setModel(model);
         }
-        
-        
-        
-        
-        
-        
-        
     }
     
     

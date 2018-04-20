@@ -6,6 +6,7 @@
 package IU;
 
 import Classes.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,11 +14,11 @@ import javax.swing.JOptionPane;
  * @author AlphaLegends
  */
 public class IUVerificaCaminho extends javax.swing.JFrame {
-
+    ArrayList<Integer> fila = new ArrayList <>();
     private int tipoEstrutura;
     private MatrizAdjacencia MA;
     ListaAdjacencia[] LA;
-    int tipoBusca;
+    int busca=2;
     /**
      * Creates new form IUVerificaCaminho
      */
@@ -41,6 +42,16 @@ public class IUVerificaCaminho extends javax.swing.JFrame {
         Descoberta.setText("");
         
     }
+    
+    public void enfileira(int vert){
+        fila.add(vert);
+    }
+    
+    private int desenfileira(){
+        int v = fila.get(0);
+        fila.remove(0);
+        return v;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,13 +63,14 @@ public class IUVerificaCaminho extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        vertice1 = new javax.swing.JTextField();
-        vertice2 = new javax.swing.JTextField();
+        Vertice1 = new javax.swing.JTextField();
+        Vertice2 = new javax.swing.JTextField();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        Descoberta = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Descoberta = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -83,11 +95,18 @@ public class IUVerificaCaminho extends javax.swing.JFrame {
         });
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Resultado :");
 
-        Descoberta.setText("caminho");
+        Descoberta.setColumns(20);
+        Descoberta.setRows(5);
+        jScrollPane1.setViewportView(Descoberta);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,30 +116,29 @@ public class IUVerificaCaminho extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(vertice1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addComponent(Vertice1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(jLabel3)))
-                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Descoberta)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(vertice2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Vertice2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jRadioButton2)
                             .addComponent(jRadioButton1))
-                        .addGap(20, 20, 20))))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,24 +146,28 @@ public class IUVerificaCaminho extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton2)
-                            .addComponent(vertice1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(vertice2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jRadioButton1)
+                        .addGap(10, 10, 10)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Vertice2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jRadioButton2))
+                    .addComponent(Vertice1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(60, 60, 60)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(Descoberta))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -153,35 +175,264 @@ public class IUVerificaCaminho extends javax.swing.JFrame {
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
     jRadioButton2.setSelected(false);
-    tipoBusca = 0;//Busca em largura
+    busca = 0;//Busca em largura
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
     jRadioButton1.setSelected(false);
-    tipoBusca = 1;//Busca em profundidade
+    busca = 1;//Busca em profundidade
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
-    public void verificarCaminhoMatriz(){
-        int u = Integer.parseInt(vertice1.getText());
-        int v = Integer.parseInt(vertice2.getText());
-        if(tipoBusca==0){//Busca em largura
-            IUBuscaLargura busca = new IUBuscaLargura(MA);
-            
-            
-            
-            
-        }else if(tipoBusca==1){
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    VerificaCaminho();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    //funcao principal
+    public void VerificaCaminho(){
+        int u = Integer.parseInt(Vertice1.getText());
+        int v = Integer.parseInt(Vertice2.getText());
+        String msg;
         
-            
-            
-            
-            
-        }else JOptionPane.showMessageDialog(null,"Escolha o tipo de busca");
+        if(busca == 0){
+            if(tipoEstrutura == 1){//Matriz Adjacencia
+
+                msg = VerificaCaminhoMatrizLargura(u,v);
+                Descoberta.setText(msg);
+            }else if(tipoEstrutura == 2){//Lista Adjacencia
+
+                msg = VerificaCaminhoListaLargura(u,v);
+                Descoberta.setText(msg);
+            }
+        }else if(busca == 1){
+            if(tipoEstrutura == 1){//Matriz Adjacencia
+
+                msg = VerificaCaminhoMatrizProfundidade(u,v);
+                Descoberta.setText(msg);
+            }else if(tipoEstrutura == 2){//Lista Adjacencia
+
+                msg = VerificaCaminhoListaProfundidade(u,v);
+                Descoberta.setText(msg);
+            }
+        }else JOptionPane.showMessageDialog(null,"Escolha o tipo de Busca para verificar o caminho");
+    }
+    
+    //funcao que faz a busca em largura com matriz
+    public String VerificaCaminhoMatrizLargura(int u,int v){
+        int raiz = u;
+        int fim = v;
+        int[][] matriz = MA.getMatriz();
+        int[] cor = new int[matriz.length];
+        int[] d = new int[matriz.length];
+        int[] pai = new int[matriz.length];
+        int aux = 0;//nao existe caminho de k até o v
         
+        for(int i=0;i<cor.length;i++){
+            cor[i] = 0; //0 = branco
+            d[i] = Integer.MAX_VALUE;
+            pai[i] = -1;
+        }
+        cor[raiz] = 1;//cinza
+        d[raiz] = 0;
+        pai[raiz] = -1;
+        enfileira(raiz);
+        while(!fila.isEmpty()){
+            int k = desenfileira();
+            for(int j=0;j<matriz.length;j++){
+                if(matriz[k][j]!=Integer.MAX_VALUE){
+                    if(cor[j]==0){
+                        cor[j]=1;//cinza
+                        d[j] = d[k]+1;
+                        pai[j] = k;
+                        if(j == fim){
+                            aux = 1;// caminho encontrado de k a v
+                            break;
+                        }
+                        enfileira(j);
+                    }
+                }
+            }
+            cor[k] = 2;//preto   
+        }
+        String msg = "inicio ";
+        if(aux == 1 ){
+            for(int i=0;i<d.length;i++){
+                if(cor[i]!=0){
+                    msg += i+" distancia "+d[i]+"\n";
+                }
+            }
+        }else if(aux == 0){
+            msg = "Nao foi encontrado caminho de "+raiz+" até "+fim;
+        }
+        return msg;
+    }
+    
+    //funcao que faz a busca em largura com lista
+    public String VerificaCaminhoListaLargura(int u,int v){
+        int raiz = u;
+        int fim = v;
+        int[] cor = new int[LA.length];
+        int[] d = new int[LA.length];
+        int[] pai = new int[LA.length];
+        int aux = 0;//nao existe caminho de k até o v
         
+        for(int i=0;i<cor.length;i++){
+            cor[i] = 0; //0 = branco
+            d[i] = Integer.MAX_VALUE;
+            pai[i] = -1;
+        }
+        cor[raiz] = 1;//cinza
+        d[raiz] = 0;
+        pai[raiz] = -1;
+        enfileira(raiz);
+        while(!fila.isEmpty()){
+            int k = desenfileira();
+            ArrayList<Vertice> lista = LA[k].getLista();
+            for(int i=0;i<lista.size();i++){
+                int j = lista.get(i).getVertice();
+                if(cor[j]==0){
+                    cor[j]=1;//cinza
+                    d[j] = d[k]+1;
+                    pai[j] = k;
+                    if(j == fim){
+                            aux = 1;// caminho encontrado de k a v
+                            break;
+                        }
+                    enfileira(j);
+                }    
+            }
+            cor[k] = 2;//preto   
+        }
+        String msg = "inicio ";
+        if(aux == 1 ){
+            for(int i=0;i<d.length;i++){
+                if(cor[i]!=0){
+                    msg += i+" distancia "+d[i]+"\n";
+                }
+            }
+        }else if(aux == 0){
+            msg = "Nao foi encontrado caminho de "+raiz+" até "+fim;
+        }
+        return msg;
+    }
+    
+    //funcao que faz a busca em profundidade com matriz
+    public String VerificaCaminhoMatrizProfundidade(int u,int v){
+        
+        int raiz = u;
+        int fim = v;
+        int[][] matriz = MA.getMatriz();
+        int[] cor = new int[matriz.length];
+        int[] d = new int[matriz.length];
+        int[] f = new int[matriz.length];
+        int aux = 0;//nao existe caminho de k até o v
+        
+        for(int i=0;i<cor.length;i++){
+            cor[i] = 0; //0 = branco
+        }
+        int tempo = 0;
+        for(int i=raiz;i<matriz.length;i++){
+            for(int j=0;j<matriz.length;j++){
+                if(matriz[i][j]!=Integer.MAX_VALUE){
+                    if(cor[i]==0){
+                        if(tempo == Integer.MIN_VALUE)break;
+                        tempo = VisitaBuscaMatriz(i,cor,d,f,matriz,tempo,fim);
+                    }
+                    
+                }
+            }
+        }
+        String msg = "inicio ";
+        if(tempo == Integer.MIN_VALUE ){
+            for(int i=0;i<d.length;i++){
+                if(cor[i]!=0){
+                    msg += i+" tempo de descoberta "+d[i]+"\n";
+                }
+            }
+            aux = 1;
+        }else if(aux == 0){
+            msg = "Nao foi encontrado caminho de "+raiz+" até "+fim;
+        }
+        return msg;
+    }
+    
+            //Auxiliar para Matriz Adjacencia
+    public int VisitaBuscaMatriz(int u,int[] cor,int[] d,int[] f,int[][] matriz,int tempo,int fim){
+        cor[u] = 1;//1 = cinza
+        tempo++;
+        d[u]=tempo;
+        if(u == fim){
+            return Integer.MIN_VALUE;
+        }
+        for(int k=0;k<matriz.length;k++){
+            if(matriz[u][k]!=Integer.MAX_VALUE){
+                if(cor[k]==0){
+                    if(tempo == Integer.MIN_VALUE)return Integer.MIN_VALUE;
+                    tempo = VisitaBuscaMatriz(k,cor,d,f,matriz,tempo,fim);
+                }
+            }
+        }
+        cor[u]=2;//2 = preto;
+        tempo++;
+        f[u]=tempo;
+    return tempo;
     }
     
     
+    //funcao que faz a busca em profundidade com lista
+    public String VerificaCaminhoListaProfundidade(int u,int v){
+        int raiz = u;
+        int fim = v;
+        int[] cor = new int[LA.length];
+        int[] d = new int[LA.length];
+        int[] f = new int[LA.length];
+        int aux = 0;//nao existe caminho de k até o v
+        
+        for(int i=0;i<LA.length;i++){
+            cor[i] = 0; //0 = branco
+        }
+        int tempo=0;
+        for(int i=raiz;i<LA.length;i++){
+            if(cor[i]==0){
+                if(tempo == Integer.MIN_VALUE)break;
+                tempo = VisitaBuscaLista(i,cor,d,f,LA,tempo,fim);
+            }  
+        }
+        String msg = "inicio ";
+        if(tempo == Integer.MIN_VALUE ){
+            for(int i=0;i<d.length;i++){
+                if(cor[i]!=0){
+                    msg += i+" tempo de descoberta "+d[i]+"\n";
+                }
+            }
+            aux = 1;
+        }else if(aux == 0){
+            msg = "Nao foi encontrado caminho de "+raiz+" até "+fim;
+        }
+        return msg;
+    }
+    
+            //Auxiliar para Lista Adjacencia
+    public int VisitaBuscaLista(int u,int[] cor,int[] d,int[] f,ListaAdjacencia[] LA,int tempo,int fim){
+        cor[u] = 1;//1 = cinza
+        tempo++;
+        d[u]=tempo;
+        if(u == fim){
+            return Integer.MIN_VALUE;
+        }
+        ArrayList<Vertice> lista = LA[u].getLista();
+        int i=0;
+        for(int k=lista.get(i).getVertice();i<lista.size();i++){
+            if(cor[LA[k].getVertice()]==0){
+                if(tempo == Integer.MIN_VALUE)return Integer.MIN_VALUE;
+                tempo = VisitaBuscaLista(k,cor,d,f,LA,tempo,fim);
+                if(tempo == Integer.MIN_VALUE)return Integer.MIN_VALUE;
+            }  
+        }
+        cor[u]=2;//2 = preto;
+        tempo++;
+        f[u]=tempo;
+    return tempo;
+    }
     
     
     /**
@@ -220,14 +471,15 @@ public class IUVerificaCaminho extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Descoberta;
+    private javax.swing.JTextArea Descoberta;
+    private javax.swing.JTextField Vertice1;
+    private javax.swing.JTextField Vertice2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField vertice1;
-    private javax.swing.JTextField vertice2;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
