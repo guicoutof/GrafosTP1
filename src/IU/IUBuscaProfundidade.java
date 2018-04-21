@@ -156,6 +156,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        //limpar tabela
         if(tipoEstrutura==1){
             BuscaProfundidadeMatriz(MA);
         }else if(tipoEstrutura == 2){
@@ -171,6 +172,8 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
         int[] cor = new int[matriz.length];
         int[] d = new int[matriz.length];
         int[] f = new int[matriz.length];
+        String msg = "";
+        
         for(int i=0;i<cor.length;i++){
             cor[i] = 0; //0 = branco
         }
@@ -179,29 +182,34 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
             for(int j=0;j<matriz.length;j++){
                 if(matriz[i][j]!=Integer.MAX_VALUE){
                     if(cor[i]==0){
-                      tempo = VisitaBuscaMatriz(i,cor,d,f,matriz,tempo);
+                      tempo = VisitaBuscaMatriz(i,cor,d,f,matriz,tempo,msg);
                     }
                     
                 }
             }
         }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         for(int i=0;i<d.length;i++){
-            System.out.println("vertice " +i+": "+d[i]+"/"+f[i]);
-            //model.addRow(new Object[]{i, d[i], f[i]});
-            
-            //JTable1.setModel(model);
+            Object[] linha = new Object[3];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = f[i];
+            model.addRow(linha);
+
         }
+        Descoberta.setText(msg);
     }
     
     //Auxiliar para Matriz Adjacencia
-    public int VisitaBuscaMatriz(int u,int[] cor,int[] d,int[] f,int[][] matriz,int tempo){
+    public int VisitaBuscaMatriz(int u,int[] cor,int[] d,int[] f,int[][] matriz,int tempo,String msg){
         cor[u] = 1;//1 = cinza
         tempo++;
         d[u]=tempo;
+        msg+=u+" ";
         for(int k=0;k<matriz.length;k++){
             if(matriz[u][k]!=Integer.MAX_VALUE){
                 if(cor[k]==0){
-                tempo = VisitaBuscaMatriz(k,cor,d,f,matriz,tempo);
+                tempo = VisitaBuscaMatriz(k,cor,d,f,matriz,tempo,msg);
                 }
             }
         }
@@ -218,36 +226,43 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
         int[] cor = new int[LA.length];
         int[] d = new int[LA.length];
         int[] f = new int[LA.length];
+        String msg = "";
+        
         for(int i=0;i<LA.length;i++){
             cor[i] = 0; //0 = branco
         }
         int tempo=0;
         for(int i=raiz;i<LA.length;i++){
             if(cor[i]==0){
-                tempo = VisitaBuscaLista(i,cor,d,f,LA,tempo);
+                tempo = VisitaBuscaLista(i,cor,d,f,LA,tempo,msg);
             }  
         }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         for(int i=0;i<d.length;i++){
-            System.out.println("vertice " +i+": "+d[i]+"/"+f[i]);
-            //model.addRow(new Object[]{i, d[i], f[i]});
-            
-            //JTable1.setModel(model);
+            Object[] linha = new Object[3];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = f[i];
+            model.addRow(linha);
+
         }
+        Descoberta.setText(msg);
     }
     
     
     
     //Auxiliar para Lista Adjacencia
     
-    public int VisitaBuscaLista(int u,int[] cor,int[] d,int[] f,ListaAdjacencia[] LA,int tempo){
+    public int VisitaBuscaLista(int u,int[] cor,int[] d,int[] f,ListaAdjacencia[] LA,int tempo,String msg){
         cor[u] = 1;//1 = cinza
         tempo++;
         d[u]=tempo;
+        msg+=u+" ";
         ArrayList<Vertice> lista = LA[u].getLista();
         int i=0;
         for(int k=lista.get(i).getVertice();i<lista.size();i++){
             if(cor[LA[k].getVertice()]==0){
-                tempo = VisitaBuscaLista(k,cor,d,f,LA,tempo);
+                tempo = VisitaBuscaLista(k,cor,d,f,LA,tempo,msg);
             }  
         }
         cor[u]=2;//2 = preto;

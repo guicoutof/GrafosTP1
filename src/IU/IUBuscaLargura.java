@@ -19,9 +19,6 @@ public class IUBuscaLargura extends javax.swing.JFrame {
     private int tipoEstrutura;
     private MatrizAdjacencia MA;
     ListaAdjacencia[] LA;
-    DefaultTableModel model = new DefaultTableModel(); //pegar seu model aqui
-    JTable JTable1 = new JTable(model);
-    
     
     public IUBuscaLargura() {
         initComponents();
@@ -183,6 +180,8 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         int[] cor = new int[matriz.length];
         int[] d = new int[matriz.length];
         int[] pai = new int[matriz.length];
+        String msg = "";
+        
         for(int i=0;i<cor.length;i++){
             cor[i] = 0; //0 = branco
             d[i] = Integer.MAX_VALUE;
@@ -191,6 +190,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         cor[raiz] = 1;//cinza
         d[raiz] = 0;
         pai[raiz] = -1;
+        msg += raiz+ " ";
         enfileira(raiz);
         while(!fila.isEmpty()){
             int u = desenfileira();
@@ -200,17 +200,23 @@ public class IUBuscaLargura extends javax.swing.JFrame {
                         cor[j]=1;//cinza
                         d[j] = d[u]+1;
                         pai[j] = u;
+                        msg += j+ " ";
                         enfileira(j);
                     }
                 }
             }
             cor[u] = 2;//preto   
         }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         for(int i=0;i<d.length;i++){
-            System.out.println("vertice " +i+": d "+d[i]+" pai "+pai[i]);
-            //model.addRow(new Object[]{i, d[i], f[i]});
-            //JTable1.setModel(model);
+            Object[] linha = new Object[3];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = pai[i];
+            model.addRow(linha);
+
         }
+        Descoberta.setText(msg);
     }
     
     
@@ -219,6 +225,8 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         int[] cor = new int[LA.length];
         int[] d = new int[LA.length];
         int[] pai = new int[LA.length];
+        String msg = "";
+        
         for(int i=0;i<cor.length;i++){
             cor[i] = 0; //0 = branco
             d[i] = Integer.MAX_VALUE;
@@ -227,6 +235,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         cor[raiz] = 1;//cinza
         d[raiz] = 0;
         pai[raiz] = -1;
+        msg += raiz+ " ";
         enfileira(raiz);
         while(!fila.isEmpty()){
             int u = desenfileira();
@@ -237,16 +246,22 @@ public class IUBuscaLargura extends javax.swing.JFrame {
                     cor[j]=1;//cinza
                     d[j] = d[u]+1;
                     pai[j] = u;
+                    msg += j+ " ";
                     enfileira(j);
                 }    
             }
             cor[u] = 2;//preto   
         }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         for(int i=0;i<d.length;i++){
-            System.out.println("vertice " +i+": d "+d[i]+" pai "+pai[i]);
-            //model.addRow(new Object[]{i, d[i], f[i]});
-            //JTable1.setModel(model);
+            Object[] linha = new Object[3];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = pai[i];
+            model.addRow(linha);
+
         }
+        Descoberta.setText(msg);
     }
     
     
