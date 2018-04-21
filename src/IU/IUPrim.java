@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author AlphaLegends
  */
 public class IUPrim extends javax.swing.JFrame {
-    ArrayList<Integer> fila = new ArrayList <>();
+    
     private int tipoEstrutura;
     private MatrizAdjacencia MA;
     ListaAdjacencia[] LA;
@@ -179,7 +179,7 @@ public class IUPrim extends javax.swing.JFrame {
         int[] visitados = new int[LA.length];
         String msg = "";
         int u =0;
-        int aux=0;
+        
         int raiz = 0;
         for(int i=0;i<LA.length;i++){
             if(LA[i].getVertice() != -1){// obter o primeiro vertice

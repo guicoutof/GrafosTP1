@@ -5,11 +5,18 @@
  */
 package IU;
 
+import Classes.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author AlphaLegends
  */
 public class IUDijkstra extends javax.swing.JFrame {
+    private int tipoEstrutura;
+    private MatrizAdjacencia MA;
+    ListaAdjacencia[] LA;
 
     /**
      * Creates new form IUDijkstra
@@ -18,6 +25,47 @@ public class IUDijkstra extends javax.swing.JFrame {
         initComponents();
     }
 
+    public IUDijkstra(MatrizAdjacencia MA) {
+        initComponents();
+        this.MA = MA;
+        tipoEstrutura = 1;
+        
+    }
+    
+    public IUDijkstra(ListaAdjacencia[] LA) {
+        initComponents();
+        this.LA = LA;
+        tipoEstrutura = 2;
+        
+    }
+    
+    public void relaxa(int u,int v,int peso,int[] d,int[] pai){
+        if(d[v]>(d[u]+(peso))){
+            d[v] = d[u] + peso;
+            pai[v] = u;
+        }
+    }
+    
+    public boolean vazio(int[] Q){
+        for(int i=0;i<Q.length;i++){
+            if(Q[i] == 0)return false;
+        }
+        return true;
+    }
+    
+    public int extrairMinimo(int[] Q,int[] chave){
+        int menor = Integer.MAX_VALUE;
+        int vertice = 0;
+        for(int i=0;i<Q.length;i++){
+            if(Q[i]==0 && chave[i]<menor){
+                menor = chave[i];
+                vertice = i;
+            }
+        }
+        Q[vertice] = 1;
+        return vertice;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,22 +75,170 @@ public class IUDijkstra extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Raiz = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        Buscar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Nó Raiz");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Vertice", "Distancia", "Pai"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(1, 1, 1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(37, 37, 37)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(Raiz, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(Buscar)))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(1, 1, 1)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(104, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel1)
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Raiz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Buscar))
+                    .addGap(18, 18, 18)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(192, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        //confirmar se sao ponderados
+        if(tipoEstrutura==1){
+            DijkstraMatriz();
+        }else if(tipoEstrutura == 2){
+            DijkstraLista();
+        }
+    }//GEN-LAST:event_BuscarActionPerformed
+
+    public void DijkstraMatriz(){
+        int[][] matriz = MA.getMatriz();
+        int[] pai = new int [matriz.length];
+        int[] d = new int[matriz.length];
+        int[] visitados = new int[matriz.length];
+        int u;
+        int raiz = Integer.parseInt(Raiz.getText());
+        
+        for(int i=0;i<matriz.length;i++){
+            d[i]=Integer.MAX_VALUE;
+            pai[i]=-1;
+            visitados[i]=0;
+        }
+        d[raiz]=0;
+        while(!vazio(visitados)){
+            u = extrairMinimo(visitados,d);
+            for(int i=0;i<matriz.length;i++){
+                if(matriz[u][i]!= Integer.MAX_VALUE){
+                    relaxa(u,i,matriz[u][i],d,pai);
+                }
+            }
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
+        for(int i=0;i<d.length;i++){
+            Object[] linha = new Object[3];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = pai[i];
+            model.addRow(linha);
+        }
+    }
+    
+    
+    public void DijkstraLista(){
+        int[] pai = new int [LA.length];
+        int[] d = new int[LA.length];
+        int[] visitados = new int[LA.length];
+        int u;
+        int raiz = Integer.parseInt(Raiz.getText());
+        
+        for(int i=0;i<LA.length;i++){
+            d[i]=Integer.MAX_VALUE;
+            pai[i]=-1;
+            visitados[i]=0;
+        }
+        d[raiz]=0;
+        while(!vazio(visitados)){
+            u = extrairMinimo(visitados,d);
+            ArrayList<Vertice> lista = LA[u].getLista();
+            for(int i=0;i<lista.size();i++){
+                int k = lista.get(i).getVertice();
+                    relaxa(u,k,lista.get(i).getValor(),d,pai);
+            }
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
+        for(int i=0;i<d.length;i++){
+            Object[] linha = new Object[3];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = pai[i];
+            model.addRow(linha);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -79,5 +275,11 @@ public class IUDijkstra extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Buscar;
+    private javax.swing.JTextField Raiz;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

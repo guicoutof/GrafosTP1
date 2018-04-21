@@ -141,6 +141,11 @@ public class Main extends javax.swing.JFrame {
         jMenu5.setText("Caminho Minimo");
 
         jMenuItem11.setText("Dijkstra");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem11);
 
         jMenuItem12.setText("Bellman-Ford");
@@ -209,7 +214,7 @@ public class Main extends javax.swing.JFrame {
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
-       
+            
             MA.LerMatrizAdjacencia(sc);
             MA.ExibirMatrizAdjacencia(MA.getMatriz());
             tipoAresta = MA.getTipoAresta();
@@ -246,6 +251,7 @@ public class Main extends javax.swing.JFrame {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         
+            
             LerListaAdjacencia(sc);//le a Lista Adjacencia
             ExibirListaAdjacencia();
             tipoEstrutura = 2;
@@ -319,6 +325,18 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        if(tipoEstrutura == 1){
+            IUDijkstra IU = new IUDijkstra(MA);
+            IU.setVisible(true);
+        }else if(tipoEstrutura ==2){
+            IUDijkstra IU = new IUDijkstra(LA);
+            IU.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+        }
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments

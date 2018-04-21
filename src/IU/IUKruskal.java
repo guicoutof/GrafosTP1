@@ -6,6 +6,7 @@
 package IU;
 
 import Classes.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,6 +16,7 @@ public class IUKruskal extends javax.swing.JFrame {
     private int tipoEstrutura;
     private MatrizAdjacencia MA;
     ListaAdjacencia[] LA;
+    private int tipoAresta;
     /**
      * Creates new form IUKruskal
      */
@@ -26,6 +28,7 @@ public class IUKruskal extends javax.swing.JFrame {
         initComponents();
         this.MA = MA;
         tipoEstrutura = 1;
+        tipoAresta = MA.getTipoAresta();
         
     }
     
@@ -33,6 +36,7 @@ public class IUKruskal extends javax.swing.JFrame {
         initComponents();
         this.LA = LA;
         tipoEstrutura = 2;
+        tipoAresta = LA[0].getTipoAresta();
         
     }
 
@@ -47,15 +51,20 @@ public class IUKruskal extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        Descoberta = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Gerar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        Descoberta.setColumns(20);
+        Descoberta.setRows(5);
+        jScrollPane1.setViewportView(Descoberta);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,13 +85,40 @@ public class IUKruskal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(tipoAresta==0){
+            if(tipoEstrutura == 1){
+                String msg = "";   
+                //msg = KruskalMatriz();
+                Descoberta.setText(msg);
+            }else if(tipoEstrutura == 2){
+                String msg = "";   
+                //msg = KruskalLista();
+                Descoberta.setText(msg);
+            }else JOptionPane.showMessageDialog(null,"Grafo nao encontrado");
+        }else if(tipoAresta == 1){
+            JOptionPane.showMessageDialog(null,"O algoritmo é usado apenas em grafos");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void KruskalMatriz(){
+        int[][] matriz = MA.getMatriz();
+        int[] arvore = new int[matriz.length];
+        
+    }
+    
+    
+    public void KruskalLista(){
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -119,8 +155,8 @@ public class IUKruskal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea Descoberta;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
