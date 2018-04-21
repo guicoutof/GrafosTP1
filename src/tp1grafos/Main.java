@@ -382,12 +382,14 @@ public class Main extends javax.swing.JFrame {
         int nVertices = sc.nextInt();
         
         //arraylist
-        LA = new ListaAdjacencia[nVertices]; 
+        LA = new ListaAdjacencia[nVertices];
+        
 
         for(int i = 0; i < nVertices; i++){
         LA[i] = new ListaAdjacencia();
         }
-
+        LA[0].setTipoAresta(tipoAresta);
+        
         int vertice1;
         int vertice2;
         int peso;

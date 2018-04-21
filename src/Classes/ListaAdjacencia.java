@@ -15,6 +15,17 @@ import java.util.Scanner;
 public class ListaAdjacencia {
      ArrayList<Vertice> lista;
      private int vertice;
+     private int tipoAresta;
+
+    public int getTipoAresta() {
+        return tipoAresta;
+    }
+
+    public void setTipoAresta(int tipoAresta) {
+        this.tipoAresta = tipoAresta;
+    }
+     
+     
     
     public ListaAdjacencia() {
     this.lista = new ArrayList<Vertice>();

@@ -23,6 +23,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
     public IUBuscaLargura() {
         initComponents();
         Descoberta.setText("");
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     }
     
     public IUBuscaLargura(MatrizAdjacencia MA) {
@@ -30,6 +31,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         Descoberta.setText("");
         this.MA = MA;
         tipoEstrutura = 1;
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         
     }
     
@@ -38,6 +40,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         Descoberta.setText("");
         this.LA = LA;
         tipoEstrutura = 2;
+        
         
     }
     
@@ -166,7 +169,8 @@ public class IUBuscaLargura extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-       if(tipoEstrutura==1){
+        
+        if(tipoEstrutura==1){
             BuscaLarguraMatriz();
         }else if(tipoEstrutura == 2){
             BuscaProfundidadeLista();
@@ -208,6 +212,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
             cor[u] = 2;//preto   
         }
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
         for(int i=0;i<d.length;i++){
             Object[] linha = new Object[3];
             linha[0] = i;
@@ -253,6 +258,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
             cor[u] = 2;//preto   
         }
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
         for(int i=0;i<d.length;i++){
             Object[] linha = new Object[3];
             linha[0] = i;

@@ -189,6 +189,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
             }
         }
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
         for(int i=0;i<d.length;i++){
             Object[] linha = new Object[3];
             linha[0] = i;
@@ -238,6 +239,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
             }  
         }
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
         for(int i=0;i<d.length;i++){
             Object[] linha = new Object[3];
             linha[0] = i;
