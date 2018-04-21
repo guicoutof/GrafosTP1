@@ -5,19 +5,50 @@
  */
 package IU;
 
+import Classes.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author AlphaLegends
  */
 public class IUBellman extends javax.swing.JFrame {
-
+    private int tipoEstrutura;
+    private MatrizAdjacencia MA;
+    ListaAdjacencia[] LA;
     /**
      * Creates new form IUBellman
      */
     public IUBellman() {
         initComponents();
+        Descoberta.setText("");
     }
 
+    public IUBellman(MatrizAdjacencia MA) {
+        initComponents();
+        this.MA = MA;
+        tipoEstrutura = 1;
+        Descoberta.setText("");
+        
+    }
+    
+    public IUBellman(ListaAdjacencia[] LA) {
+        initComponents();
+        this.LA = LA;
+        tipoEstrutura = 2;
+        Descoberta.setText("");        
+    }
+    
+    
+    public void relaxa(int u,int v,int peso,int[] d,int[] pai){
+        if(d[v]>(d[u]+(peso))){
+            
+            d[v] = d[u] + peso;
+            pai[v] = u;
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,22 +58,205 @@ public class IUBellman extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Raiz = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        Buscar = new javax.swing.JButton();
+        Descoberta = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Nó Raiz");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Vertice", "Distancia", "Pai"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarActionPerformed(evt);
+            }
+        });
+
+        Descoberta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Descoberta.setText("Mensagem");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jSeparator1)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(Raiz, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Buscar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(Descoberta)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 10, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Raiz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Buscar))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Descoberta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        //confirmar se sao ponderados
+        String msg = "";
+        if(tipoEstrutura==1){
+            msg = BellmanMatriz();
+            Descoberta.setText(msg);
+        }else if(tipoEstrutura == 2){
+            msg = BellmanLista();
+            Descoberta.setText(msg);
+        }
+    }//GEN-LAST:event_BuscarActionPerformed
+
+    public String BellmanMatriz(){
+        int[][] matriz = MA.getMatriz();
+        int[] pai = new int [matriz.length];
+        int[] d = new int[matriz.length];
+        int raiz = Integer.parseInt(Raiz.getText());
+        String msg = "";
+        
+        for(int i=0;i<matriz.length;i++){
+            d[i]=(Integer.MAX_VALUE-2000);
+            pai[i]=-1;
+        }
+        d[raiz] = 0;
+        for(int i=1;i<matriz.length;i++){
+            for(int j=0;j<matriz.length;j++){
+                for(int k=0;k<matriz.length;k++){
+                    if(matriz[j][k]!=Integer.MAX_VALUE){
+                        relaxa(j,k,matriz[j][k],d,pai);
+                    }
+                }
+            }
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
+        for(int i=0;i<d.length;i++){
+            Object[] linha = new Object[3];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = pai[i];
+            model.addRow(linha);
+        }
+        
+        for(int j=0;j<matriz.length;j++){
+                for(int k=0;k<matriz.length;k++){
+                    if(matriz[j][k]!=Integer.MAX_VALUE){
+                        if(d[k]>d[j]+matriz[j][k]){
+                            //falso se  existe ciclo negativo
+                            return msg += "Existe ciclo negativo !";
+                        }
+                    }
+                }
+            }
+        //verdadeiro se não existe ciclo negativo,
+        return msg += "Não existe ciclo negativo !";
+    }
+    
+    
+    public String BellmanLista(){
+        int[] pai = new int [LA.length];
+        int[] d = new int[LA.length];
+        int raiz = Integer.parseInt(Raiz.getText());
+        String msg = "";
+        
+        for(int i=0;i<LA.length;i++){
+            d[i]=(Integer.MAX_VALUE-2000);//problema de flag
+            pai[i]=-1;
+        }
+        d[raiz] = 0;
+        for(int i=1;i<LA.length;i++){//repeticao da funcao
+            
+            for(int j=0;j<LA.length;j++){
+                ArrayList<Vertice> lista = LA[j].getLista();
+                for(int k=0;k<lista.size();k++){
+                    relaxa(j,lista.get(k).getVertice(),lista.get(k).getValor(),d,pai);
+                }
+            }
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
+        for(int i=0;i<d.length;i++){
+            Object[] linha = new Object[3];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = pai[i];
+            model.addRow(linha);
+        }
+        
+        for(int j=0;j<LA.length;j++){
+            ArrayList<Vertice> lista = LA[j].getLista();
+                for(int k=0;k<lista.size();k++){
+                    if(d[lista.get(k).getVertice()]>d[j]+lista.get(k).getValor()){
+                        //falso se  existe ciclo negativo
+                        return msg += "Existe ciclo negativo !";
+                    }
+                }
+            }
+        //verdadeiro se não existe ciclo negativo,
+        return msg += "Não existe ciclo negativo !";
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -79,5 +293,12 @@ public class IUBellman extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Buscar;
+    private javax.swing.JLabel Descoberta;
+    private javax.swing.JTextField Raiz;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

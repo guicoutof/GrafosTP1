@@ -149,6 +149,11 @@ public class Main extends javax.swing.JFrame {
         jMenu5.add(jMenuItem11);
 
         jMenuItem12.setText("Bellman-Ford");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem12);
 
         jMenu2.add(jMenu5);
@@ -337,6 +342,18 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
         }
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        if(tipoEstrutura == 1){
+            IUBellman IU = new IUBellman(MA);
+            IU.setVisible(true);
+        }else if(tipoEstrutura ==2){
+            IUBellman IU = new IUBellman(LA);
+            IU.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+        }
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     /**
      * @param args the command line arguments
