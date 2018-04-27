@@ -60,6 +60,7 @@ public class IUKruskal extends javax.swing.JFrame {
         Descoberta = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("AGM de Kruskal");
 
         jButton1.setText("Gerar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

@@ -56,6 +56,7 @@ public class IUVerificaConexo extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Verificação de Grafo Conexo");
 
         jButton1.setText("Verificar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -200,7 +201,7 @@ public class IUVerificaConexo extends javax.swing.JFrame {
         int[] cor = new int [LA.length];
         int[] d = new int [LA.length];
         int[] f = new int [LA.length];
-        int raiz=0;int aux = 0;
+        int raiz=0;
         int[] componente = new int [LA.length]; //tamanho maximo de componentes e´ o numero maximo de verts do grafo
         int componenteAtual = 1;
         
@@ -211,7 +212,13 @@ public class IUVerificaConexo extends javax.swing.JFrame {
             f[i] = 0;
         }
        
-        raiz = LA[0].getVertice();
+        for(int i=0;i<LA.length;i++){
+            if(LA[i].getVertice() != -1){// obter o primeiro vertice
+                raiz = i;
+                break;
+            }
+        }
+        
         int tempo = 0; 
         tempo = VisitaBuscaLista(raiz,cor,d,f,LA,tempo,componente,componenteAtual);
         
@@ -221,6 +228,17 @@ public class IUVerificaConexo extends javax.swing.JFrame {
                 tempo = VisitaBuscaLista(i,cor,d,f,LA,tempo,componente,componenteAtual);
             }  
         }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
+        for(int i=0;i<d.length;i++){
+            Object[] linha = new Object[4];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = f[i];
+            linha[3] = componente[i];
+            model.addRow(linha);
+
+        }
     }
     
     public int VisitaBuscaLista(int u,int[] cor,int[] d,int[] f,ListaAdjacencia[] LA,int tempo,int[] componente,int componenteAtual){
@@ -229,8 +247,9 @@ public class IUVerificaConexo extends javax.swing.JFrame {
         d[u]=tempo;
         componente[u] = componenteAtual;
         ArrayList<Vertice> lista = LA[u].getLista();
-        int i=0;
-        for(int k=lista.get(i).getVertice();i<lista.size();i++){
+        
+        for(int i=0;i<lista.size();i++){
+            int k=lista.get(i).getVertice();
             if(cor[LA[k].getVertice()]==0){
                 tempo = VisitaBuscaLista(k,cor,d,f,LA,tempo,componente,componenteAtual);
             }  

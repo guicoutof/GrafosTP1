@@ -64,6 +64,7 @@ public class IUBellman extends javax.swing.JFrame {
         Descoberta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Caminho Minimo de Bellman-Ford");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nó Inicial");

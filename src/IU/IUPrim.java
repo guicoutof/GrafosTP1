@@ -76,6 +76,7 @@ public class IUPrim extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("AGM de Prim");
 
         Descoberta.setColumns(20);
         Descoberta.setRows(5);

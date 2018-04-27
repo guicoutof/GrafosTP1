@@ -7,7 +7,6 @@ package IU;
 
 import Classes.*;
 import java.util.ArrayList;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -60,6 +59,7 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
         Descoberta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Busca em Profundidade");
 
         Buscar.setText("Buscar");
         Buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -122,12 +122,14 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(106, 106, 106)
-                            .addComponent(Buscar)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(139, 139, 139)
-                            .addComponent(Descoberta, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(106, 106, 106)
+                                    .addComponent(Buscar))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(139, 139, 139)
+                                    .addComponent(Descoberta, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(0, 0, Short.MAX_VALUE)))
                     .addGap(1, 1, 1)))
         );
         layout.setVerticalGroup(
@@ -261,8 +263,9 @@ public class IUBuscaProfundidade extends javax.swing.JFrame {
         d[u]=tempo;
         msg+=u+" ";
         ArrayList<Vertice> lista = LA[u].getLista();
-        int i=0;
-        for(int k=lista.get(i).getVertice();i<lista.size();i++){
+
+        for(int i=0;i<lista.size();i++){
+            int k=lista.get(i).getVertice();
             if(cor[LA[k].getVertice()]==0){
                 tempo = VisitaBuscaLista(k,cor,d,f,LA,tempo,msg);
             }  

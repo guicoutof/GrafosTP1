@@ -81,6 +81,7 @@ public class IUDijkstra extends javax.swing.JFrame {
         Buscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Caminho Minimo de Dijkstra");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nó Raiz");
