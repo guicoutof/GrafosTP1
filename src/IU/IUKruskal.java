@@ -39,12 +39,14 @@ public class IUKruskal extends javax.swing.JFrame {
         tipoAresta = LA[0].getTipoAresta();   
     }
     
-    public boolean vazio(int[] Q){
-        for(int i=0;i<Q.length;i++){
-            if(Q[i] == 0)return false;
+     public boolean pertenceArvore(int[] lista,ArrayList<int[]> conjunto){
+        for(int i=0;i<conjunto.size();i++){
+            int[] x = conjunto.get(i);
+            if(lista[0]==x[0] || lista[1]==x[1])return true;
         }
-        return true;
+        return false;
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,7 +105,7 @@ public class IUKruskal extends javax.swing.JFrame {
         if(tipoAresta==0){
             if(tipoEstrutura == 1){
                 String msg = "";   
-                //msg = KruskalMatriz();
+                msg = KruskalMatriz();
                 Descoberta.setText(msg);
             }else if(tipoEstrutura == 2){
                 String msg = "";   
@@ -115,12 +117,11 @@ public class IUKruskal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void KruskalMatriz(){
+    public String KruskalMatriz(){
         int[][] matriz = MA.getMatriz();
-        int[] arvore = new int[matriz.length];
-        int[] visitados = new int[matriz.length];
-        ArrayList conjuntoA = new ArrayList();
-        ArrayList conjuntoB = new ArrayList();
+        ArrayList<int[]> conjuntoA = new ArrayList();
+        ArrayList<int[]> arvore = new ArrayList();
+        String msg = "";
         
         for(int i=0;i<matriz.length;i++){
             for(int j=0;j<matriz.length;j++){
@@ -130,21 +131,67 @@ public class IUKruskal extends javax.swing.JFrame {
                     linha[1] = j;
                     linha[2] = matriz[i][j];
                     conjuntoA.add(linha);
+                    
                 }
             }
         }
         
-        // ordenar
+        //ordenar
+        msg+="vertice --(peso)-- vertice \n";
         
-//        for(int i=0;i<conjunto.size();i++){
-//            
-//        }
         
+        for(int i=0;i<conjuntoA.size();i++){
+            if(!pertenceArvore(conjuntoA.get(i),arvore)){
+                arvore.add(conjuntoA.get(i));
+            }
+        }
+        
+        
+        for(int i=0;i<arvore.size();i++){//imprimir
+            int[] aux = arvore.get(i);
+            msg += aux[0]+" --("+aux[2]+")-- "+aux[1]+" --";
+        }
+        
+        //msg += "\n\n nao esta muito boa !! nao consegui ordenar";
+        return msg;
         
     }
     
-    
-    public void KruskalLista(){
+    public String KruskalLista(){
+        ArrayList<int[]> conjuntoA = new ArrayList();
+        ArrayList<int[]> arvore = new ArrayList();
+        String msg = "";
+        
+        for(int i=0;i<LA.length;i++){
+            ArrayList<Vertice> lista = LA[i].getLista();
+            for(int j=0;j<lista.size();j++){
+                int[] linha = new int[3];
+                    linha[0] = i;
+                    linha[1] = lista.get(j).getVertice();
+                    linha[2] = lista.get(j).getValor();
+                    conjuntoA.add(linha);
+            }
+        }
+        
+        
+        //ordenar
+        
+        msg+="vertice --(peso)-- vertice \n";
+        
+        
+        for(int i=0;i<conjuntoA.size();i++){
+            if(!pertenceArvore(conjuntoA.get(i),arvore)){
+                arvore.add(conjuntoA.get(i));
+            }
+        }
+        
+        for(int i=0;i<arvore.size();i++){//imprimir
+            int[] aux = arvore.get(i);
+            msg += aux[0]+" --("+aux[2]+")-- "+aux[1]+" --";
+        }
+        
+        //msg += "\n\n nao esta muito boa !! nao consegui ordenar";
+        return msg;
         
     }
     
