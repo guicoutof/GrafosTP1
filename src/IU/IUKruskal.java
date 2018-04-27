@@ -135,9 +135,9 @@ public class IUKruskal extends javax.swing.JFrame {
         
         // ordenar
         
-        for(int i=0;i<conjunto.size();i++){
-            
-        }
+//        for(int i=0;i<conjunto.size();i++){
+//            
+//        }
         
         
     }

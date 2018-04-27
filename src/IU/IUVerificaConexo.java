@@ -5,12 +5,20 @@
  */
 package IU;
 
+import Classes.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author AlphaLegends
  */
 public class IUVerificaConexo extends javax.swing.JFrame {
-
+    ArrayList<Integer> fila = new ArrayList <>();
+    private int tipoEstrutura;
+    private MatrizAdjacencia MA;
+    ListaAdjacencia[] LA;
+    int busca=2;
     /**
      * Creates new form IUVerificaConexo
      */
@@ -18,6 +26,22 @@ public class IUVerificaConexo extends javax.swing.JFrame {
         initComponents();
     }
 
+    public IUVerificaConexo(MatrizAdjacencia MA) {
+        initComponents();
+        this.MA = MA;
+        tipoEstrutura = 1;
+
+        
+    }
+    
+    public IUVerificaConexo(ListaAdjacencia[] LA) {
+        initComponents();
+        this.LA = LA;
+        tipoEstrutura = 2;
+
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,22 +51,197 @@ public class IUVerificaConexo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jButton1.setText("Verificar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Vertice", "Tempo de Chegada", "Tempo de Finalização", "Componente"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(tipoEstrutura==1){
+            VerificaConexoMatriz();
+        }else if(tipoEstrutura == 2){
+            VerificaConexoLista();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+    public void VerificaConexoMatriz(){
+        int[][] matriz = MA.getMatriz();
+        int[] cor = new int [matriz.length];
+        int[] d = new int [matriz.length];
+        int[] f = new int [matriz.length];
+        int raiz=0;int aux = 0;
+        int[] componente = new int [matriz.length]; //tamanho maximo de componentes e´ o numero maximo de verts do grafo
+        int componenteAtual = 1;
+        
+        for(int i = 0; i < matriz.length; i++){
+            cor[i] = 0;
+            componente[i] = 0;
+            d[i] = 0;
+            f[i] = 0;
+        }
+
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz.length;j++){
+                if(matriz[i][j] != Integer.MAX_VALUE && aux ==0){// obter o primeiro vertice
+                    raiz = i;
+                    aux = 1;
+                }
+        }
+        }
+       
+        int tempo = 0; 
+        tempo = VisitaBuscaMatriz(raiz,cor,d,f,matriz,tempo,componente,componenteAtual);
+        
+        for(int i = 0; i < matriz.length; i++){
+            if(cor[i] == 0){
+                    if(cor[i]==0){
+                        componenteAtual++;//caso seja desconexo
+                        tempo = VisitaBuscaMatriz(i,cor,d,f,matriz,tempo,componente,componenteAtual);
+                    }
+                    
+                
+            }
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
+        for(int i=0;i<d.length;i++){
+            Object[] linha = new Object[4];
+            linha[0] = i;
+            linha[1] = d[i];
+            linha[2] = f[i];
+            linha[3] = componente[i];
+            model.addRow(linha);
+
+        }
+        
+    }
+    
+    //Auxiliar para Matriz Adjacencia
+    public int VisitaBuscaMatriz(int u,int[] cor,int[] d,int[] f,int[][] matriz,int tempo,int[] componente,int componenteAtual){
+        cor[u] = 1;//1 = cinza
+        tempo++;
+        d[u]=tempo;
+        componente[u] = componenteAtual;
+        for(int k=0;k<matriz.length;k++){
+            if(matriz[u][k]!=Integer.MAX_VALUE){
+                if(cor[k]==0){
+                tempo = VisitaBuscaMatriz(k,cor,d,f,matriz,tempo,componente,componenteAtual);
+                }
+            }
+        }
+        cor[u]=2;//2 = preto;
+        tempo++;
+        f[u]=tempo;
+    return tempo;
+    }
+    
+    public void VerificaConexoLista(){
+        int[] cor = new int [LA.length];
+        int[] d = new int [LA.length];
+        int[] f = new int [LA.length];
+        int raiz=0;int aux = 0;
+        int[] componente = new int [LA.length]; //tamanho maximo de componentes e´ o numero maximo de verts do grafo
+        int componenteAtual = 1;
+        
+        for(int i = 0; i < LA.length; i++){
+            cor[i] = 0;
+            componente[i] = 0;
+            d[i] = 0;
+            f[i] = 0;
+        }
+       
+        raiz = LA[0].getVertice();
+        int tempo = 0; 
+        tempo = VisitaBuscaLista(raiz,cor,d,f,LA,tempo,componente,componenteAtual);
+        
+        for(int i=raiz;i<LA.length;i++){
+            if(cor[i]==0){
+                componenteAtual++;
+                tempo = VisitaBuscaLista(i,cor,d,f,LA,tempo,componente,componenteAtual);
+            }  
+        }
+    }
+    
+    public int VisitaBuscaLista(int u,int[] cor,int[] d,int[] f,ListaAdjacencia[] LA,int tempo,int[] componente,int componenteAtual){
+        cor[u] = 1;//1 = cinza
+        tempo++;
+        d[u]=tempo;
+        componente[u] = componenteAtual;
+        ArrayList<Vertice> lista = LA[u].getLista();
+        int i=0;
+        for(int k=lista.get(i).getVertice();i<lista.size();i++){
+            if(cor[LA[k].getVertice()]==0){
+                tempo = VisitaBuscaLista(k,cor,d,f,LA,tempo,componente,componenteAtual);
+            }  
+        }
+        cor[u]=2;//2 = preto;
+        tempo++;
+        f[u]=tempo;
+    return tempo;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -79,5 +278,8 @@ public class IUVerificaConexo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

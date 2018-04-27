@@ -167,6 +167,11 @@ public class Main extends javax.swing.JFrame {
         jMenu2.add(VCaminho);
 
         VConexo.setText("Verificação de grafo conexo");
+        VConexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VConexoActionPerformed(evt);
+            }
+        });
         jMenu2.add(VConexo);
 
         jMenuBar1.add(jMenu2);
@@ -357,6 +362,18 @@ public class Main extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_BellmanFordActionPerformed
+
+    private void VConexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VConexoActionPerformed
+        if(tipoEstrutura == 1){
+            IUVerificaConexo IU = new IUVerificaConexo(MA);
+            IU.setVisible(true);
+        }else if(tipoEstrutura ==2){
+            IUVerificaConexo IU = new IUVerificaConexo(LA);
+            IU.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+        }
+    }//GEN-LAST:event_VConexoActionPerformed
 
     /**
      * @param args the command line arguments
