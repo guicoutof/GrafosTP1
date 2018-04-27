@@ -7,7 +7,6 @@ package IU;
 
 import Classes.*;
 import java.util.ArrayList;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -40,8 +39,6 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         Descoberta.setText("");
         this.LA = LA;
         tipoEstrutura = 2;
-        
-        
     }
     
     public void enfileira(int vert){
@@ -83,7 +80,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Nó Raiz");
+        jLabel1.setText("Nó Inicial");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -124,13 +121,12 @@ public class IUBuscaLargura extends javax.swing.JFrame {
                 .addComponent(descoberta, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
                 .addGap(31, 31, 31))
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Raiz, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Buscar)))
+                    .addComponent(Raiz, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(Buscar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -146,7 +142,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -159,17 +155,15 @@ public class IUBuscaLargura extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(Descoberta))
                 .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(descoberta)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(descoberta))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        
         if(tipoEstrutura==1){
             BuscaLarguraMatriz();
         }else if(tipoEstrutura == 2){
@@ -186,16 +180,17 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         int[] pai = new int[matriz.length];
         String msg = "";
         
-        for(int i=0;i<cor.length;i++){
+        for(int i=0;i<cor.length;i++){//inicializacao
             cor[i] = 0; //0 = branco
             d[i] = Integer.MAX_VALUE;
             pai[i] = -1;
         }
         cor[raiz] = 1;//cinza
         d[raiz] = 0;
-        pai[raiz] = -1;
+        pai[raiz] = -1; //inicio raiz
         msg += raiz+ " ";
         enfileira(raiz);
+        
         while(!fila.isEmpty()){
             int u = desenfileira();
             for(int j=0;j<matriz.length;j++){
@@ -211,7 +206,8 @@ public class IUBuscaLargura extends javax.swing.JFrame {
             }
             cor[u] = 2;//preto   
         }
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();//impressao dos resultados na tabela
         model.setNumRows(0);
         for(int i=0;i<d.length;i++){
             Object[] linha = new Object[3];
@@ -242,6 +238,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         pai[raiz] = -1;
         msg += raiz+ " ";
         enfileira(raiz);
+        
         while(!fila.isEmpty()){
             int u = desenfileira();
             ArrayList<Vertice> lista = LA[u].getLista();
@@ -257,6 +254,7 @@ public class IUBuscaLargura extends javax.swing.JFrame {
             }
             cor[u] = 2;//preto   
         }
+        
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setNumRows(0);
         for(int i=0;i<d.length;i++){
@@ -269,9 +267,6 @@ public class IUBuscaLargura extends javax.swing.JFrame {
         }
         Descoberta.setText(msg);
     }
-    
-    
-    
     /**
      * @param args the command line arguments
      */

@@ -29,14 +29,12 @@ public class IUDijkstra extends javax.swing.JFrame {
         initComponents();
         this.MA = MA;
         tipoEstrutura = 1;
-        
     }
     
     public IUDijkstra(ListaAdjacencia[] LA) {
         initComponents();
         this.LA = LA;
         tipoEstrutura = 2;
-        
     }
     
     public void relaxa(int u,int v,int peso,int[] d,int[] pai){
@@ -163,7 +161,6 @@ public class IUDijkstra extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        //confirmar se sao ponderados
         if(tipoEstrutura==1){
             DijkstraMatriz();
         }else if(tipoEstrutura == 2){
@@ -176,17 +173,18 @@ public class IUDijkstra extends javax.swing.JFrame {
         int[] pai = new int [matriz.length];
         int[] d = new int[matriz.length];
         int[] visitados = new int[matriz.length];
-        int u;
         int raiz = Integer.parseInt(Raiz.getText());
+        int u;
         
-        for(int i=0;i<matriz.length;i++){
+        for(int i=0;i<matriz.length;i++){//inicializacao
             d[i]=Integer.MAX_VALUE;
             pai[i]=-1;
             visitados[i]=0;
         }
         d[raiz]=0;
+        
         while(!vazio(visitados)){
-            u = extrairMinimo(visitados,d);
+            u = extrairMinimo(visitados,d);//obtencao da menor aresta entre os adjacentes
             for(int i=0;i<matriz.length;i++){
                 if(matriz[u][i]!= Integer.MAX_VALUE){
                     relaxa(u,i,matriz[u][i],d,pai);
@@ -213,14 +211,16 @@ public class IUDijkstra extends javax.swing.JFrame {
         int u;
         int raiz = Integer.parseInt(Raiz.getText());
         
-        for(int i=0;i<LA.length;i++){
+        for(int i=0;i<LA.length;i++){//inicializacao
             d[i]=Integer.MAX_VALUE;
             pai[i]=-1;
             visitados[i]=0;
         }
         d[raiz]=0;
+        
         while(!vazio(visitados)){
-            u = extrairMinimo(visitados,d);
+            u = extrairMinimo(visitados,d);//obtencao da menor aresta entre os adjacentes
+            
             ArrayList<Vertice> lista = LA[u].getLista();
             for(int i=0;i<lista.size();i++){
                 int k = lista.get(i).getVertice();

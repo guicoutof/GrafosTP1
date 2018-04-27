@@ -6,6 +6,7 @@
 package IU;
 
 import Classes.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,15 +30,20 @@ public class IUKruskal extends javax.swing.JFrame {
         this.MA = MA;
         tipoEstrutura = 1;
         tipoAresta = MA.getTipoAresta();
-        
     }
     
     public IUKruskal(ListaAdjacencia[] LA) {
         initComponents();
         this.LA = LA;
         tipoEstrutura = 2;
-        tipoAresta = LA[0].getTipoAresta();
-        
+        tipoAresta = LA[0].getTipoAresta();   
+    }
+    
+    public boolean vazio(int[] Q){
+        for(int i=0;i<Q.length;i++){
+            if(Q[i] == 0)return false;
+        }
+        return true;
     }
 
     /**
@@ -111,6 +117,28 @@ public class IUKruskal extends javax.swing.JFrame {
     public void KruskalMatriz(){
         int[][] matriz = MA.getMatriz();
         int[] arvore = new int[matriz.length];
+        int[] visitados = new int[matriz.length];
+        ArrayList conjuntoA = new ArrayList();
+        ArrayList conjuntoB = new ArrayList();
+        
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz.length;j++){
+                if(matriz[i][j] != Integer.MAX_VALUE){ // criando conjunto das arestas
+                    int[] linha = new int[3];
+                    linha[0] = i;
+                    linha[1] = j;
+                    linha[2] = matriz[i][j];
+                    conjuntoA.add(linha);
+                }
+            }
+        }
+        
+        // ordenar
+        
+        for(int i=0;i<conjunto.size();i++){
+            
+        }
+        
         
     }
     
@@ -118,6 +146,9 @@ public class IUKruskal extends javax.swing.JFrame {
     public void KruskalLista(){
         
     }
+    
+    
+ 
     
     /**
      * @param args the command line arguments

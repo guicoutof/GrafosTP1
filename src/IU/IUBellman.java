@@ -30,7 +30,6 @@ public class IUBellman extends javax.swing.JFrame {
         this.MA = MA;
         tipoEstrutura = 1;
         Descoberta.setText("");
-        
     }
     
     public IUBellman(ListaAdjacencia[] LA) {
@@ -40,15 +39,13 @@ public class IUBellman extends javax.swing.JFrame {
         Descoberta.setText("");        
     }
     
-    
+    //funcao de relaxamento
     public void relaxa(int u,int v,int peso,int[] d,int[] pai){
         if(d[v]>(d[u]+(peso))){
-            
             d[v] = d[u] + peso;
             pai[v] = u;
         }
     }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,7 +66,7 @@ public class IUBellman extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Nó Raiz");
+        jLabel1.setText("Nó Inicial");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -143,9 +140,9 @@ public class IUBellman extends javax.swing.JFrame {
                     .addComponent(Buscar))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(Descoberta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -154,7 +151,6 @@ public class IUBellman extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        //confirmar se sao ponderados
         String msg = "";
         if(tipoEstrutura==1){
             msg = BellmanMatriz();
@@ -163,6 +159,7 @@ public class IUBellman extends javax.swing.JFrame {
             msg = BellmanLista();
             Descoberta.setText(msg);
         }
+        
     }//GEN-LAST:event_BuscarActionPerformed
 
     public String BellmanMatriz(){
@@ -172,22 +169,24 @@ public class IUBellman extends javax.swing.JFrame {
         int raiz = Integer.parseInt(Raiz.getText());
         String msg = "";
         
-        for(int i=0;i<matriz.length;i++){
-            d[i]=(Integer.MAX_VALUE-2000);
+        for(int i=0;i<matriz.length;i++){//inicializacao
+            d[i]=(Integer.MAX_VALUE-2000);//problema de flag
             pai[i]=-1;
         }
         d[raiz] = 0;
-        for(int i=1;i<matriz.length;i++){
-            for(int j=0;j<matriz.length;j++){
+        
+        for(int i=1;i<matriz.length;i++){//iterações
+            
+            for(int j=0;j<matriz.length;j++){   //obtencao dos vertices
                 for(int k=0;k<matriz.length;k++){
                     if(matriz[j][k]!=Integer.MAX_VALUE){
-                        relaxa(j,k,matriz[j][k],d,pai);
+                        relaxa(j,k,matriz[j][k],d,pai); //relaxamento
                     }
                 }
             }
         }
         
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); //impressao dos resultados na tabela
         model.setNumRows(0);
         for(int i=0;i<d.length;i++){
             Object[] linha = new Object[3];
@@ -197,7 +196,7 @@ public class IUBellman extends javax.swing.JFrame {
             model.addRow(linha);
         }
         
-        for(int j=0;j<matriz.length;j++){
+        for(int j=0;j<matriz.length;j++){   //verificacao de ciclo negativo
                 for(int k=0;k<matriz.length;k++){
                     if(matriz[j][k]!=Integer.MAX_VALUE){
                         if(d[k]>d[j]+matriz[j][k]){
@@ -223,17 +222,17 @@ public class IUBellman extends javax.swing.JFrame {
             pai[i]=-1;
         }
         d[raiz] = 0;
-        for(int i=1;i<LA.length;i++){//repeticao da funcao
+        for(int i=1;i<LA.length;i++){//iterações
             
             for(int j=0;j<LA.length;j++){
-                ArrayList<Vertice> lista = LA[j].getLista();
+                ArrayList<Vertice> lista = LA[j].getLista();//obtencao das arestas
                 for(int k=0;k<lista.size();k++){
-                    relaxa(j,lista.get(k).getVertice(),lista.get(k).getValor(),d,pai);
+                    relaxa(j,lista.get(k).getVertice(),lista.get(k).getValor(),d,pai);//relaxamento
                 }
             }
         }
         
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();//impressao dos resultados na tabela
         model.setNumRows(0);
         for(int i=0;i<d.length;i++){
             Object[] linha = new Object[3];
@@ -243,7 +242,7 @@ public class IUBellman extends javax.swing.JFrame {
             model.addRow(linha);
         }
         
-        for(int j=0;j<LA.length;j++){
+        for(int j=0;j<LA.length;j++){//verificacao de ciclo negativo
             ArrayList<Vertice> lista = LA[j].getLista();
                 for(int k=0;k<lista.size();k++){
                     if(d[lista.get(k).getVertice()]>d[j]+lista.get(k).getValor()){

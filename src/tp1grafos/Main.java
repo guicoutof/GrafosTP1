@@ -54,16 +54,16 @@ public class Main extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        BuscaemLargura = new javax.swing.JMenuItem();
+        BuscaemProfundidade = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        Prim = new javax.swing.JMenuItem();
+        Kruskal = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        Dijkstra = new javax.swing.JMenuItem();
+        BellmanFord = new javax.swing.JMenuItem();
+        VCaminho = new javax.swing.JMenuItem();
+        VConexo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,74 +100,74 @@ public class Main extends javax.swing.JFrame {
 
         jMenu3.setText("Busca");
 
-        jMenuItem9.setText("Busca em Largura");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        BuscaemLargura.setText("Busca em Largura");
+        BuscaemLargura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                BuscaemLarguraActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem9);
+        jMenu3.add(BuscaemLargura);
 
-        jMenuItem10.setText("Busca em Profundidade");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        BuscaemProfundidade.setText("Busca em Profundidade");
+        BuscaemProfundidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                BuscaemProfundidadeActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem10);
+        jMenu3.add(BuscaemProfundidade);
 
         jMenu2.add(jMenu3);
 
         jMenu4.setText("Arvore Geradora Minima");
 
-        jMenuItem3.setText("Prim");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        Prim.setText("Prim");
+        Prim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                PrimActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem3);
+        jMenu4.add(Prim);
 
-        jMenuItem4.setText("Kruskal");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        Kruskal.setText("Kruskal");
+        Kruskal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                KruskalActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem4);
+        jMenu4.add(Kruskal);
 
         jMenu2.add(jMenu4);
 
         jMenu5.setText("Caminho Minimo");
 
-        jMenuItem11.setText("Dijkstra");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        Dijkstra.setText("Dijkstra");
+        Dijkstra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                DijkstraActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem11);
+        jMenu5.add(Dijkstra);
 
-        jMenuItem12.setText("Bellman-Ford");
-        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+        BellmanFord.setText("Bellman-Ford");
+        BellmanFord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
+                BellmanFordActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem12);
+        jMenu5.add(BellmanFord);
 
         jMenu2.add(jMenu5);
 
-        jMenuItem5.setText("Verificação de caminho");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        VCaminho.setText("Verificação de caminho");
+        VCaminho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                VCaminhoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        jMenu2.add(VCaminho);
 
-        jMenuItem6.setText("Verificação de grafo conexo");
-        jMenu2.add(jMenuItem6);
+        VConexo.setText("Verificação de grafo conexo");
+        jMenu2.add(VConexo);
 
         jMenuBar1.add(jMenu2);
 
@@ -224,10 +224,7 @@ public class Main extends javax.swing.JFrame {
             MA.ExibirMatrizAdjacencia(MA.getMatriz());
             tipoAresta = MA.getTipoAresta();
             tipoEstrutura = 1;
-        
     }
-    
-
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -267,7 +264,7 @@ public class Main extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void BuscaemProfundidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscaemProfundidadeActionPerformed
         if(tipoEstrutura == 1){
             IUBuscaProfundidade IU = new IUBuscaProfundidade(MA);
             IU.setVisible(true);
@@ -277,9 +274,9 @@ public class Main extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
         }
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }//GEN-LAST:event_BuscaemProfundidadeActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void BuscaemLarguraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscaemLarguraActionPerformed
         if(tipoEstrutura == 1){
             IUBuscaLargura IU = new IUBuscaLargura(MA);
             IU.setVisible(true);
@@ -289,9 +286,9 @@ public class Main extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
         }
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_BuscaemLarguraActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void KruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KruskalActionPerformed
         if(tipoAresta == 0){
             if(tipoEstrutura == 1){
                 IUKruskal IU = new IUKruskal(MA);
@@ -303,9 +300,9 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
             }
         }else JOptionPane.showMessageDialog(null,"Não é possivel gerar arvore minima para digrafo");
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_KruskalActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void PrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrimActionPerformed
         if(tipoAresta == 0){
             if(tipoEstrutura == 1){
                 IUPrim IU = new IUPrim(MA);
@@ -317,9 +314,9 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
             }
         }else JOptionPane.showMessageDialog(null,"Não é possivel gerar arvore minima para digrafo");
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_PrimActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void VCaminhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VCaminhoActionPerformed
         if(tipoEstrutura == 1){
             IUVerificaCaminho IU = new IUVerificaCaminho(MA);
             IU.setVisible(true);
@@ -329,31 +326,37 @@ public class Main extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
         }
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_VCaminhoActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        if(tipoEstrutura == 1){
-            IUDijkstra IU = new IUDijkstra(MA);
-            IU.setVisible(true);
-        }else if(tipoEstrutura ==2){
-            IUDijkstra IU = new IUDijkstra(LA);
-            IU.setVisible(true);
-        }else{
-            JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+    private void DijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DijkstraActionPerformed
+        int aux = JOptionPane.showConfirmDialog(null,"Os Grafos são ponderados ?");
+        if(aux == 0){
+            if(tipoEstrutura == 1){
+                IUDijkstra IU = new IUDijkstra(MA);
+                IU.setVisible(true);
+            }else if(tipoEstrutura ==2){
+                IUDijkstra IU = new IUDijkstra(LA);
+                IU.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+            }
         }
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    }//GEN-LAST:event_DijkstraActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        if(tipoEstrutura == 1){
-            IUBellman IU = new IUBellman(MA);
-            IU.setVisible(true);
-        }else if(tipoEstrutura ==2){
-            IUBellman IU = new IUBellman(LA);
-            IU.setVisible(true);
-        }else{
-            JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+    private void BellmanFordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BellmanFordActionPerformed
+        int aux = JOptionPane.showConfirmDialog(null,"Os Grafos são ponderados ?");
+        if(aux == 0){
+            if(tipoEstrutura == 1){
+                IUBellman IU = new IUBellman(MA);
+                IU.setVisible(true);
+            }else if(tipoEstrutura ==2){
+                IUBellman IU = new IUBellman(LA);
+                IU.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Nenhum dado foi carregado");
+            }
         }
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
+    }//GEN-LAST:event_BellmanFordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,6 +394,14 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem BellmanFord;
+    private javax.swing.JMenuItem BuscaemLargura;
+    private javax.swing.JMenuItem BuscaemProfundidade;
+    private javax.swing.JMenuItem Dijkstra;
+    private javax.swing.JMenuItem Kruskal;
+    private javax.swing.JMenuItem Prim;
+    private javax.swing.JMenuItem VCaminho;
+    private javax.swing.JMenuItem VConexo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
@@ -400,15 +411,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 
      public void LerListaAdjacencia(Scanner sc){
