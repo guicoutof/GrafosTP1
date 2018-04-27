@@ -72,7 +72,7 @@ public class MatrizAdjacencia {
         this.matriz = matriz;
     }
     
-    public void ExibirMatrizAdjacencia(int[][] matriz){
+    public void PrintarMatrizAdjacencia(int[][] matriz){
         System.out.print("    ");
         for(int i=0;i<matriz.length;i++){
             System.out.print(i+"     ");
@@ -85,6 +85,23 @@ public class MatrizAdjacencia {
             }
             System.out.println();
         }
+    }
+    
+    public String ExibirMatrizAdjacencia(int[][] matriz){
+        String msg = "";
+        msg+="    ";
+        for(int i=0;i<matriz.length;i++){
+            msg+=i+"     ";
+        }
+        msg+="\n";
+        for(int i=0;i<matriz.length;i++){
+            msg+=i+" ";
+            for(int j=0;j<matriz.length;j++){
+                msg+=matriz[i][j]+" ";
+            }
+            msg+="\n";
+        }
+        return msg;
     }
     
     

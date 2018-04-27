@@ -48,6 +48,8 @@ public class Main extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Grafo = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -77,6 +79,10 @@ public class Main extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        Grafo.setColumns(20);
+        Grafo.setRows(5);
+        jScrollPane1.setViewportView(Grafo);
 
         jMenu1.setText("Abrir");
 
@@ -189,11 +195,17 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
                 .addComponent(jButton1))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(389, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jLabel1)))
@@ -226,9 +238,12 @@ public class Main extends javax.swing.JFrame {
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+            String msg = "";
             MA.LerMatrizAdjacencia(sc);
-            MA.ExibirMatrizAdjacencia(MA.getMatriz());
+            msg = MA.ExibirMatrizAdjacencia(MA.getMatriz());
+            msg+="\n\n o numero "+Integer.MAX_VALUE+" simboliza que nao há aresta na regiao !!!";
+            Grafo.setText(msg);
+            
             tipoAresta = MA.getTipoAresta();
             tipoEstrutura = 1;
     }
@@ -260,9 +275,11 @@ public class Main extends javax.swing.JFrame {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         
-            
+            String msg = "\n";
             LerListaAdjacencia(sc);//le a Lista Adjacencia
-            ExibirListaAdjacencia();
+            msg = ExibirListaAdjacencia();
+            Grafo.setText(msg);
+            
             tipoEstrutura = 2;
     }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -417,6 +434,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem BuscaemLargura;
     private javax.swing.JMenuItem BuscaemProfundidade;
     private javax.swing.JMenuItem Dijkstra;
+    private javax.swing.JTextArea Grafo;
     private javax.swing.JMenuItem Kruskal;
     private javax.swing.JMenuItem Prim;
     private javax.swing.JMenuItem VCaminho;
@@ -431,6 +449,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
      public void LerListaAdjacencia(Scanner sc){
@@ -482,9 +501,17 @@ public class Main extends javax.swing.JFrame {
         }       
     }
     
-    private void ExibirListaAdjacencia() {
+    private void PrintarListaAdjacencia() {
        for(int i=0;i<LA.length;i++){
            System.out.print(LA[i].exibir());
        }
+    }
+    
+    private String ExibirListaAdjacencia() {
+        String msg = "";
+        for(int i=0;i<LA.length;i++){
+           msg+=LA[i].exibir();
+       }
+        return msg;
     }
 }
